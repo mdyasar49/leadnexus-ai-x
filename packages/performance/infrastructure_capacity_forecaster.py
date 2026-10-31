@@ -41,3 +41,4 @@ class InfrastructureCapacityForecaster:
         self.db.commit()
         self.db.refresh(forecast)
         return forecast
+

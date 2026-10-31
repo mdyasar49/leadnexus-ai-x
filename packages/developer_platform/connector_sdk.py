@@ -332,3 +332,4 @@ class CustomWebhookExporterConnector(BaseConnector):
             records_processed=context.configuration.get("batch_size", 10),
             records=[{"destination": webhook_url, "exported_at": datetime.now(timezone.utc).isoformat()}],
         )
+

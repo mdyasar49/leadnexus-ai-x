@@ -151,3 +151,4 @@ class TenantQuota(Base):
     current_daily_spend_usd = Column(Float, default=0.0, nullable=False)
     is_enforced = Column(Boolean, default=True, nullable=False)
     updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc), nullable=False)
+

@@ -101,3 +101,4 @@ class APIVersionContract(Base):
     sunset_date = Column(DateTime, nullable=True)
     breaking_changes = Column(JSON, default=list)
     min_supported_client_version = Column(String(50), default="1.0.0", nullable=False)
+

@@ -74,3 +74,4 @@ class RetentionPolicyEngine:
         self.db.commit()
         self.db.refresh(event)
         return event
+

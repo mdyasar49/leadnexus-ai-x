@@ -178,3 +178,4 @@ def create_capacity_forecast(req: CreateForecastRequest, db: Session = Depends(g
         monthly_growth_rate_pct=req.monthly_growth_rate_pct,
     )
     return {"forecast": forecast}
+

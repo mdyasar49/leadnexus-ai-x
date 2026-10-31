@@ -69,3 +69,4 @@ class BackupAndDisasterRecoveryService:
         self.db.commit()
         self.db.refresh(snapshot)
         return False, snapshot, f"Checksum mismatch: expected {snapshot.checksum_sha256}, got {current_checksum}"
+

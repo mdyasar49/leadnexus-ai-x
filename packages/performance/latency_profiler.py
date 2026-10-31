@@ -63,3 +63,4 @@ class LatencyProfiler:
         self.db.commit()
         self.db.refresh(snapshot)
         return snapshot
+

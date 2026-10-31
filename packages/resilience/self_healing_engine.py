@@ -90,3 +90,4 @@ class SelfHealingEngine:
         self.db.commit()
         self.db.refresh(inc)
         return inc
+

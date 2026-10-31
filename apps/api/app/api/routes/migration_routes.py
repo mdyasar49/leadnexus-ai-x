@@ -208,3 +208,4 @@ def register_api_version(
         min_supported_client=req.min_supported_client,
     )
     return {"api_version_contract": contract}
+

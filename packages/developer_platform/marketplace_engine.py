@@ -224,3 +224,4 @@ class MarketplaceEngine:
         installation.status = "UNINSTALLED"
         self.db.commit()
         return True
+

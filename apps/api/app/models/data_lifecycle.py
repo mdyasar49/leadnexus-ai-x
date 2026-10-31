@@ -87,3 +87,4 @@ class LifecycleTransitionEvent(Base):
     to_tier = Column(String(50), nullable=False)
     reason = Column(String(255), nullable=False)
     transitioned_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+

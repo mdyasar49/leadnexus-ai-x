@@ -407,3 +407,4 @@ def update_quota(
     db.commit()
     db.refresh(quota)
     return {"quota": quota}
+

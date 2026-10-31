@@ -83,3 +83,4 @@ class CircuitBreakerService:
         self.db.commit()
         self.db.refresh(cb)
         return cb
+

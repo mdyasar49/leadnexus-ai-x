@@ -6,10 +6,7 @@ import {
   Typography,
   Tabs,
   Tab,
-  Container,
-  Chip,
-  IconButton,
-  Tooltip
+  Chip
 } from '@mui/material';
 import {
   Shield,
@@ -25,13 +22,13 @@ import {
 } from 'lucide-react';
 
 import AutonomousResearchWorkspace from './pages/AutonomousResearchWorkspace';
-import DeveloperPlatformWorkspace from './pages/DeveloperPlatformWorkspace';
-import EnterpriseDataLifecycleWorkspace from './pages/EnterpriseDataLifecycleWorkspace';
-import EnterpriseGovernanceWorkspace from './pages/EnterpriseGovernanceWorkspace';
+import { DeveloperPlatformWorkspace } from './pages/DeveloperPlatformWorkspace';
+import { EnterpriseDataLifecycleWorkspace } from './pages/EnterpriseDataLifecycleWorkspace';
+import { EnterpriseGovernanceWorkspace } from './pages/EnterpriseGovernanceWorkspace';
 import EnterpriseIntegrationsWorkspace from './pages/EnterpriseIntegrationsWorkspace';
-import EnterpriseMigrationWorkspace from './pages/EnterpriseMigrationWorkspace';
-import EnterprisePerformanceWorkspace from './pages/EnterprisePerformanceWorkspace';
-import EnterpriseResilienceWorkspace from './pages/EnterpriseResilienceWorkspace';
+import { EnterpriseMigrationWorkspace } from './pages/EnterpriseMigrationWorkspace';
+import { EnterprisePerformanceWorkspace } from './pages/EnterprisePerformanceWorkspace';
+import { EnterpriseResilienceWorkspace } from './pages/EnterpriseResilienceWorkspace';
 import KnowledgeOntologyWorkspace from './pages/KnowledgeOntologyWorkspace';
 import KnowledgeRetrievalWorkspace from './pages/KnowledgeRetrievalWorkspace';
 

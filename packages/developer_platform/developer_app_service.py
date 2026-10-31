@@ -250,3 +250,4 @@ class DeveloperAppService:
             ApplicationScope.is_approved == True,
         ).all()
         return [s.scope_name for s in scopes]
+

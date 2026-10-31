@@ -201,3 +201,4 @@ class ProviderRegistry:
         if not provider or not provider.is_enabled:
             return False
         return capability.upper() in [c.upper() for c in provider.capabilities]
+

@@ -200,3 +200,4 @@ class SSRFProtection:
             pass  # It's a domain name, not a raw IP
 
         return True, None
+

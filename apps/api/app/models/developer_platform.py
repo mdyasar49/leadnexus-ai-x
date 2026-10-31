@@ -241,3 +241,4 @@ class DeveloperAuditEvent(Base):
     target_id = Column(String(36), nullable=False)
     details = Column(JSON, default=dict)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+

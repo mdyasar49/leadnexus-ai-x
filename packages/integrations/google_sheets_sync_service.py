@@ -105,3 +105,4 @@ class GoogleSheetsSyncService:
             "conflicts": preview["conflicts"],
             "is_ready_to_sync": True,
         }
+

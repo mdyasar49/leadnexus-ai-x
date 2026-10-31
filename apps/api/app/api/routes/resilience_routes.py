@@ -262,3 +262,4 @@ def update_incident(incident_id: str, req: UpdateIncidentRequest, db: Session = 
     if not inc:
         raise HTTPException(status_code=404, detail="Incident not found.")
     return {"incident": inc}
+

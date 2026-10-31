@@ -132,3 +132,4 @@ class PlatformIncident(Base):
     root_cause = Column(Text, nullable=True)
     started_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
     resolved_at = Column(DateTime, nullable=True)
+

@@ -197,3 +197,4 @@ def purge_ai_cache(
         "purged_messages_count": purged_messages,
         "purged_rag_chunks_count": purged_chunks,
     }
+

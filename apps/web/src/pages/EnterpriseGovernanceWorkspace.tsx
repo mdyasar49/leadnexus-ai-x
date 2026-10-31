@@ -518,3 +518,4 @@ export const EnterpriseGovernanceWorkspace: React.FC = () => {
     </Container>
   );
 };
+

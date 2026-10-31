@@ -123,3 +123,4 @@ class SuppressionAndLegalHoldService:
         ).first()
 
         return hold is not None
+

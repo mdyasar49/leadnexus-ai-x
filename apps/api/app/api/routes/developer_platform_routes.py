@@ -479,3 +479,4 @@ def simulate_provider_call(
         simulation_mode=req.simulation_mode,
     )
     return result
+

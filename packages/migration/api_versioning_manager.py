@@ -68,3 +68,4 @@ class APIVersioningManager:
             warning = f"299 - API version '{api_version}' is deprecated. Sunset scheduled for {contract.sunset_date.isoformat() if contract.sunset_date else 'TBD'}"
 
         return True, warning, None
+

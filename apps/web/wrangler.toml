@@ -5,3 +5,4 @@ pages_build_output_dir = "dist"
 [env.production.vars]
 ENVIRONMENT = "production"
 VITE_API_BASE_URL = "https://api.leadnexus.infogenx.com"
+
