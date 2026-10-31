@@ -1,0 +1,7 @@
+name = "leadnexus-ai-x"
+compatibility_date = "2024-04-01"
+pages_build_output_dir = "dist"
+
+[env.production.vars]
+ENVIRONMENT = "production"
+VITE_API_BASE_URL = "https://api.leadnexus.infogenx.com"
