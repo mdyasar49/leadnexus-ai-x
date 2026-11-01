@@ -41,6 +41,7 @@ import EnterpriseEventsWorkspace from './pages/EnterpriseEventsWorkspace';
 import { EnterpriseWebhooksWorkspace } from './pages/EnterpriseWebhooksWorkspace';
 import { EnterpriseDigitalTwinWorkspace } from './pages/EnterpriseDigitalTwinWorkspace';
 import { EnterpriseMultiRegionWorkspace } from './pages/EnterpriseMultiRegionWorkspace';
+import EnterpriseEventDrivenWorkspace from './pages/EnterpriseEventDrivenWorkspace';
 import { EnterprisePerformanceWorkspace } from './pages/EnterprisePerformanceWorkspace';
 import { EnterpriseResilienceWorkspace } from './pages/EnterpriseResilienceWorkspace';
 import KnowledgeOntologyWorkspace from './pages/KnowledgeOntologyWorkspace';
@@ -104,6 +105,7 @@ export default function App() {
     { label: 'Enterprise Webhooks', icon: <Zap size={18} />, component: <EnterpriseWebhooksWorkspace /> },
     { label: 'Digital Twin Simulation', icon: <Activity size={18} />, component: <EnterpriseDigitalTwinWorkspace /> },
     { label: 'Multi-Region Global', icon: <Globe size={18} />, component: <EnterpriseMultiRegionWorkspace /> },
+    { label: 'Event-Driven CQRS (P36)', icon: <Radio size={18} />, component: <EnterpriseEventDrivenWorkspace /> },
   ];
 
   return (

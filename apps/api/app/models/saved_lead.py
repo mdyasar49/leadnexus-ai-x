@@ -44,3 +44,4 @@ class SavedLead(Base):
         Index("idx_saved_lead_company_contact", "company_id", "contact_id"),
         UniqueConstraint("company_id", "contact_id", name="uq_saved_lead_company_contact"),
     )
+

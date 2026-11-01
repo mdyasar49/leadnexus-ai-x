@@ -307,3 +307,4 @@ def post_heartbeat(
 
     db.commit()
     return {"message": "Heartbeat recorded successfully"}
+

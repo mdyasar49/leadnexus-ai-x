@@ -709,3 +709,4 @@ export const B2BLeadSearchWorkspace: React.FC<B2BLeadSearchWorkspaceProps> = ({
 };
 
 export default B2BLeadSearchWorkspace;
+

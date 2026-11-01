@@ -82,3 +82,4 @@ class GlobalTrafficRouter:
             "fencing_token": None,
             "sovereignty_checked": True,
         }
+

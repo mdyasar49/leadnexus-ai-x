@@ -208,3 +208,4 @@ class SavedLeadService:
     def get_saved_count(cls, db: Session) -> int:
         """Returns total count of saved leads for navbar badges."""
         return db.query(SavedLead).count()
+

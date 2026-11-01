@@ -247,3 +247,4 @@ class LeadSearchService:
             "total_companies_matched": total_companies,
             "results": results,
         }
+

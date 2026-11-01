@@ -450,6 +450,17 @@ from app.models.multi_region import (
     RegionalHealthHeartbeat,
 )
 from app.models.saved_lead import SavedLead
+from app.models.cqrs_event_sourcing import (
+    EventSchemaRecord,
+    AggregateEvent,
+    AggregateSnapshot,
+    CommandIdempotencyRecord,
+    DeadLetterEvent,
+    SchemaCompatibility,
+    CommandStatus,
+    DLQReason,
+    DLQStatus,
+)
 from app.models.migration import (
     MigrationPhase,
     BackfillStatus,
@@ -906,4 +917,13 @@ __all__ = [
     "FailoverExecutionJob",
     "RegionalHealthHeartbeat",
     "SavedLead",
+    "EventSchemaRecord",
+    "AggregateEvent",
+    "AggregateSnapshot",
+    "CommandIdempotencyRecord",
+    "DeadLetterEvent",
+    "SchemaCompatibility",
+    "CommandStatus",
+    "DLQReason",
+    "DLQStatus",
 ]

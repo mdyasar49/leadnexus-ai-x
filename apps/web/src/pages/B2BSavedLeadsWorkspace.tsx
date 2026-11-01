@@ -510,3 +510,4 @@ export const B2BSavedLeadsWorkspace: React.FC<B2BSavedLeadsWorkspaceProps> = ({
 };
 
 export default B2BSavedLeadsWorkspace;
+

@@ -96,3 +96,4 @@ class RegionalHealthHeartbeat(Base):
     p99_latency_ms = Column(Float, default=24.0, nullable=False)
     error_rate_pct = Column(Float, default=0.0, nullable=False)
     recorded_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False)
+
