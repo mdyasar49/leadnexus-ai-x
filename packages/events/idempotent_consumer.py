@@ -48,3 +48,4 @@ class IdempotentConsumerManager:
         if not offset:
             return total_stream_events
         return max(0, total_stream_events - offset.processed_count)
+

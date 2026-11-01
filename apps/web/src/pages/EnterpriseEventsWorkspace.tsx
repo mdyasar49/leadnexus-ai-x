@@ -312,3 +312,4 @@ export const EnterpriseEventsWorkspace: React.FC = () => {
 };
 
 export default EnterpriseEventsWorkspace;
+

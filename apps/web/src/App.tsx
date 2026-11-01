@@ -19,7 +19,8 @@ import {
   Workflow,
   Share2,
   Code,
-  Radio
+  Radio,
+  Zap
 } from 'lucide-react';
 
 import AutonomousResearchWorkspace from './pages/AutonomousResearchWorkspace';
@@ -29,6 +30,7 @@ import { EnterpriseGovernanceWorkspace } from './pages/EnterpriseGovernanceWorks
 import EnterpriseIntegrationsWorkspace from './pages/EnterpriseIntegrationsWorkspace';
 import { EnterpriseMigrationWorkspace } from './pages/EnterpriseMigrationWorkspace';
 import EnterpriseEventsWorkspace from './pages/EnterpriseEventsWorkspace';
+import { EnterpriseWebhooksWorkspace } from './pages/EnterpriseWebhooksWorkspace';
 import { EnterprisePerformanceWorkspace } from './pages/EnterprisePerformanceWorkspace';
 import { EnterpriseResilienceWorkspace } from './pages/EnterpriseResilienceWorkspace';
 import KnowledgeOntologyWorkspace from './pages/KnowledgeOntologyWorkspace';
@@ -49,6 +51,7 @@ export default function App() {
     { label: 'Lifecycle & Archive', icon: <Workflow size={18} />, component: <EnterpriseDataLifecycleWorkspace /> },
     { label: 'Zero-Downtime Migration', icon: <GitMerge size={18} />, component: <EnterpriseMigrationWorkspace /> },
     { label: 'Event Bus & Outbox', icon: <Radio size={18} />, component: <EnterpriseEventsWorkspace /> },
+    { label: 'Enterprise Webhooks', icon: <Zap size={18} />, component: <EnterpriseWebhooksWorkspace /> },
   ];
 
   return (

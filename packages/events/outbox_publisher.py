@@ -113,3 +113,4 @@ class TransactionalOutboxService:
             "published": published_count,
             "failed": failed_count,
         }
+

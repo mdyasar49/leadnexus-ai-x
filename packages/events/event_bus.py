@@ -86,3 +86,4 @@ class EnterpriseEventBus:
 
 # Global event bus singleton instance
 global_event_bus = EnterpriseEventBus()
+

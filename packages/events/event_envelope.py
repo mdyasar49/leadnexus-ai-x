@@ -40,3 +40,4 @@ class EventEnvelope(BaseModel):
     def verify_checksum(self) -> bool:
         """Verifies payload integrity against checksum."""
         return self.checksum == self.calculate_checksum()
+

@@ -432,6 +432,12 @@ from app.models.events import (
     ConsumerOffset,
     EventReplayJob,
 )
+from app.models.webhooks import (
+    EnterpriseWebhookEndpoint,
+    EnterpriseWebhookDelivery,
+    WebhookReplayGuard,
+    WebhookRedriveJob,
+)
 from app.models.migration import (
     MigrationPhase,
     BackfillStatus,
@@ -876,4 +882,8 @@ __all__ = [
     "EventSubscription",
     "ConsumerOffset",
     "EventReplayJob",
+    "EnterpriseWebhookEndpoint",
+    "EnterpriseWebhookDelivery",
+    "WebhookReplayGuard",
+    "WebhookRedriveJob",
 ]
