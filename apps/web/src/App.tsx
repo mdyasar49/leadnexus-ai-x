@@ -28,7 +28,8 @@ import {
   BookmarkCheck,
   Sparkles,
   UserCheck,
-  Network
+  Network,
+  Bot
 } from 'lucide-react';
 
 import B2BLeadSearchWorkspace from './pages/B2BLeadSearchWorkspace';
@@ -47,6 +48,7 @@ import EnterpriseEventDrivenWorkspace from './pages/EnterpriseEventDrivenWorkspa
 import EnterpriseAPIGatewayWorkspace from './pages/EnterpriseAPIGatewayWorkspace';
 import EnterpriseIdentityWorkspace from './pages/EnterpriseIdentityWorkspace';
 import EnterpriseDataFabricWorkspace from './pages/EnterpriseDataFabricWorkspace';
+import EnterpriseAIModelPlatformWorkspace from './pages/EnterpriseAIModelPlatformWorkspace';
 import { EnterprisePerformanceWorkspace } from './pages/EnterprisePerformanceWorkspace';
 import { EnterpriseResilienceWorkspace } from './pages/EnterpriseResilienceWorkspace';
 import KnowledgeOntologyWorkspace from './pages/KnowledgeOntologyWorkspace';
@@ -114,6 +116,7 @@ export default function App() {
     { label: 'API Gateway & Edge (P37)', icon: <Shield size={18} />, component: <EnterpriseAPIGatewayWorkspace /> },
     { label: 'Identity & Access (P38)', icon: <UserCheck size={18} />, component: <EnterpriseIdentityWorkspace /> },
     { label: 'Data Fabric (P39)', icon: <Network size={18} />, component: <EnterpriseDataFabricWorkspace /> },
+    { label: 'AI Model Platform (P40)', icon: <Bot size={18} />, component: <EnterpriseAIModelPlatformWorkspace /> },
   ];
 
   return (

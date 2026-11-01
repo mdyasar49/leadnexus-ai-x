@@ -134,3 +134,4 @@ class UnifiedDataContractEngine:
         age_seconds = (now - last_updated_at).total_seconds()
         is_compliant = age_seconds <= sla_freshness_seconds
         return is_compliant, round(age_seconds, 2)
+

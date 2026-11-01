@@ -111,3 +111,4 @@ class FederatedAccessRouter:
             "total_entities": len(nodes),
             "total_connections": len(edges),
         }
+

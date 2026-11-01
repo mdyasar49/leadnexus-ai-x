@@ -120,3 +120,4 @@ class DataQualityEvaluator:
             "violations_count": len(violations),
             "violations": violations[:20],  # Sample first 20
         }
+

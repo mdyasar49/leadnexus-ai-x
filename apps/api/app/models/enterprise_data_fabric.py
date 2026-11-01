@@ -177,3 +177,4 @@ class DataPolicyEnforcement(Base):
     condition_expression = Column(String(255), nullable=True)  # Optional SQL/Expr condition
     is_active = Column(Boolean, default=True, nullable=False)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+

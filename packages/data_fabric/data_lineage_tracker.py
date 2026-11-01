@@ -120,3 +120,4 @@ class DataLineageTracker:
             "source_assets": sorted(list(source_nodes)),
             "lineage_path": edges_traversed,
         }
+

@@ -508,6 +508,16 @@ from app.models.enterprise_data_fabric import (
     DataQualityAssessment,
     DataPolicyEnforcement,
 )
+from app.models.enterprise_ai_platform import (
+    AIProviderEnum,
+    ModelCapability,
+    ModelTier,
+    ModelStatus,
+    RegisteredModel,
+    PromptTemplateRecord,
+    ModelInferenceLog,
+    ModelSafetyPolicy,
+)
 
 __all__ = [
     "SystemMetadata",
@@ -996,4 +1006,12 @@ __all__ = [
     "CrossDomainRelation",
     "DataQualityAssessment",
     "DataPolicyEnforcement",
+    "AIProviderEnum",
+    "ModelCapability",
+    "ModelTier",
+    "ModelStatus",
+    "RegisteredModel",
+    "PromptTemplateRecord",
+    "ModelInferenceLog",
+    "ModelSafetyPolicy",
 ]
