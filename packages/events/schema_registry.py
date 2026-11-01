@@ -138,3 +138,4 @@ class EventSchemaRegistry:
                         )
 
         return True
+

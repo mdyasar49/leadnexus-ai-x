@@ -144,3 +144,4 @@ class DeadLetterEvent(Base):
     retry_count = Column(Integer, nullable=False, default=0)
     created_at = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
     resolved_at = Column(DateTime(timezone=True), nullable=True)
+

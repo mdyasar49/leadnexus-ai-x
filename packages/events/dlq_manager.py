@@ -128,3 +128,4 @@ class DeadLetterManager:
         db.commit()
         db.refresh(record)
         return record
+

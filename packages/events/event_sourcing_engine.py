@@ -163,3 +163,4 @@ class EventSourcingEngine:
             current_version = event.sequence_number
 
         return current_state, current_version
+

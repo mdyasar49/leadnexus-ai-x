@@ -73,3 +73,4 @@ class CQRSCommandBus:
             db.add(record)
             db.commit()
             raise CommandExecutionError(f"Command '{command_name}' failed: {err}") from err
+

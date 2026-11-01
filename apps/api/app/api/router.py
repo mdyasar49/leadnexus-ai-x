@@ -60,6 +60,7 @@ from app.api.routes.enterprise_webhook_routes import router as webhook_router
 from app.api.routes.digital_twin_routes import router as simulation_router
 from app.api.routes.multi_region_routes import router as multi_region_router
 from app.api.routes.direct_lead_routes import router as direct_lead_router
+from app.api.routes.api_gateway_routes import router as gateway_router
 
 # Root router for top-level probes
 root_router = APIRouter()
@@ -121,6 +122,7 @@ api_v1_router.include_router(event_router)
 api_v1_router.include_router(webhook_router)
 api_v1_router.include_router(simulation_router)
 api_v1_router.include_router(multi_region_router)
+api_v1_router.include_router(gateway_router)
 
 # Direct /api router for universal compatibility
 api_direct_router = APIRouter(prefix="/api")
@@ -174,3 +176,4 @@ api_direct_router.include_router(event_router)
 api_direct_router.include_router(webhook_router)
 api_direct_router.include_router(simulation_router)
 api_direct_router.include_router(multi_region_router)
+api_direct_router.include_router(gateway_router)

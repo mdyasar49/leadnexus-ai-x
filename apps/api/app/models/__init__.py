@@ -461,6 +461,13 @@ from app.models.cqrs_event_sourcing import (
     DLQReason,
     DLQStatus,
 )
+from app.models.api_gateway import (
+    QuotaTier,
+    GatewayCircuitStatus,
+    TenantAPIQuota,
+    GatewayRouteMetric,
+    GatewayCircuitState,
+)
 from app.models.migration import (
     MigrationPhase,
     BackfillStatus,
@@ -926,4 +933,9 @@ __all__ = [
     "CommandStatus",
     "DLQReason",
     "DLQStatus",
+    "QuotaTier",
+    "GatewayCircuitStatus",
+    "TenantAPIQuota",
+    "GatewayRouteMetric",
+    "GatewayCircuitState",
 ]
