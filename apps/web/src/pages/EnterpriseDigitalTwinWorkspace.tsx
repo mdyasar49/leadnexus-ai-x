@@ -467,3 +467,4 @@ export const EnterpriseDigitalTwinWorkspace: React.FC = () => {
 function round(n: number, d: number) {
   return Number(n.toFixed(d));
 }
+

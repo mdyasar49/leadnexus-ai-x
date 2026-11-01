@@ -443,6 +443,12 @@ from app.models.digital_twin import (
     SimulationRun,
     OperationalCapacityModel,
 )
+from app.models.multi_region import (
+    RegionNode,
+    TenantRegionAffinity,
+    FailoverExecutionJob,
+    RegionalHealthHeartbeat,
+)
 from app.models.migration import (
     MigrationPhase,
     BackfillStatus,
@@ -894,4 +900,8 @@ __all__ = [
     "SimulationScenario",
     "SimulationRun",
     "OperationalCapacityModel",
+    "RegionNode",
+    "TenantRegionAffinity",
+    "FailoverExecutionJob",
+    "RegionalHealthHeartbeat",
 ]

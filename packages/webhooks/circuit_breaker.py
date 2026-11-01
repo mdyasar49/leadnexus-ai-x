@@ -87,3 +87,4 @@ class WebhookCircuitBreaker:
             logger.warning(f"Circuit for '{endpoint_id}' tripped to OPEN after {info['consecutive_failures']} consecutive failures.")
 
         return info["state"]
+

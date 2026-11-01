@@ -21,7 +21,8 @@ import {
   Code,
   Radio,
   Zap,
-  Activity
+  Activity,
+  Globe
 } from 'lucide-react';
 
 import AutonomousResearchWorkspace from './pages/AutonomousResearchWorkspace';
@@ -33,6 +34,7 @@ import { EnterpriseMigrationWorkspace } from './pages/EnterpriseMigrationWorkspa
 import EnterpriseEventsWorkspace from './pages/EnterpriseEventsWorkspace';
 import { EnterpriseWebhooksWorkspace } from './pages/EnterpriseWebhooksWorkspace';
 import { EnterpriseDigitalTwinWorkspace } from './pages/EnterpriseDigitalTwinWorkspace';
+import { EnterpriseMultiRegionWorkspace } from './pages/EnterpriseMultiRegionWorkspace';
 import { EnterprisePerformanceWorkspace } from './pages/EnterprisePerformanceWorkspace';
 import { EnterpriseResilienceWorkspace } from './pages/EnterpriseResilienceWorkspace';
 import KnowledgeOntologyWorkspace from './pages/KnowledgeOntologyWorkspace';
@@ -55,6 +57,7 @@ export default function App() {
     { label: 'Event Bus & Outbox', icon: <Radio size={18} />, component: <EnterpriseEventsWorkspace /> },
     { label: 'Enterprise Webhooks', icon: <Zap size={18} />, component: <EnterpriseWebhooksWorkspace /> },
     { label: 'Digital Twin Simulation', icon: <Activity size={18} />, component: <EnterpriseDigitalTwinWorkspace /> },
+    { label: 'Multi-Region Global', icon: <Globe size={18} />, component: <EnterpriseMultiRegionWorkspace /> },
   ];
 
   return (

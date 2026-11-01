@@ -94,3 +94,4 @@ class OperationalCapacityModel(Base):
     __table_args__ = (
         Index("ix_op_capacities_tenant_res", "tenant_id", "resource_name", unique=True),
     )
+

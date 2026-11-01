@@ -101,3 +101,4 @@ class WebhookSignatureSigner:
         computed_digest = cls.compute_signature(payload_str, secret, timestamp, nonce)
 
         return hmac.compare_digest(provided_digest, computed_digest)
+

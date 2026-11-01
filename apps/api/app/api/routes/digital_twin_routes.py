@@ -262,3 +262,4 @@ def get_operational_capacity(
         }
         for c in caps
     ]
+
