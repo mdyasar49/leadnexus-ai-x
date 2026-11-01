@@ -438,6 +438,11 @@ from app.models.webhooks import (
     WebhookReplayGuard,
     WebhookRedriveJob,
 )
+from app.models.digital_twin import (
+    SimulationScenario,
+    SimulationRun,
+    OperationalCapacityModel,
+)
 from app.models.migration import (
     MigrationPhase,
     BackfillStatus,
@@ -886,4 +891,7 @@ __all__ = [
     "EnterpriseWebhookDelivery",
     "WebhookReplayGuard",
     "WebhookRedriveJob",
+    "SimulationScenario",
+    "SimulationRun",
+    "OperationalCapacityModel",
 ]

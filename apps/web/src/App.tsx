@@ -20,7 +20,8 @@ import {
   Share2,
   Code,
   Radio,
-  Zap
+  Zap,
+  Activity
 } from 'lucide-react';
 
 import AutonomousResearchWorkspace from './pages/AutonomousResearchWorkspace';
@@ -31,6 +32,7 @@ import EnterpriseIntegrationsWorkspace from './pages/EnterpriseIntegrationsWorks
 import { EnterpriseMigrationWorkspace } from './pages/EnterpriseMigrationWorkspace';
 import EnterpriseEventsWorkspace from './pages/EnterpriseEventsWorkspace';
 import { EnterpriseWebhooksWorkspace } from './pages/EnterpriseWebhooksWorkspace';
+import { EnterpriseDigitalTwinWorkspace } from './pages/EnterpriseDigitalTwinWorkspace';
 import { EnterprisePerformanceWorkspace } from './pages/EnterprisePerformanceWorkspace';
 import { EnterpriseResilienceWorkspace } from './pages/EnterpriseResilienceWorkspace';
 import KnowledgeOntologyWorkspace from './pages/KnowledgeOntologyWorkspace';
@@ -52,6 +54,7 @@ export default function App() {
     { label: 'Zero-Downtime Migration', icon: <GitMerge size={18} />, component: <EnterpriseMigrationWorkspace /> },
     { label: 'Event Bus & Outbox', icon: <Radio size={18} />, component: <EnterpriseEventsWorkspace /> },
     { label: 'Enterprise Webhooks', icon: <Zap size={18} />, component: <EnterpriseWebhooksWorkspace /> },
+    { label: 'Digital Twin Simulation', icon: <Activity size={18} />, component: <EnterpriseDigitalTwinWorkspace /> },
   ];
 
   return (
