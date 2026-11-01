@@ -82,7 +82,7 @@ export const KnowledgeOntologyWorkspace: React.FC = () => {
   const [dslQuery, setDslQuery] = useState<string>("technology = 'ODOO' AND industry = 'RETAIL'");
   const [dslResults, setDslResults] = useState<any>(null);
   const [contextPreview, setContextPreview] = useState<any>(null);
-  const [alertMsg, setAlertMsg] = useState<{ text: string; severity: 'success' | 'error' | 'info' } | null>(null);
+  const [alertMsg, setAlertMsg] = useState<{ text: string; severity: 'success' | 'error' | 'info' | 'warning' } | null>(null);
 
   // Fetch initial concepts
   const fetchConcepts = async () => {

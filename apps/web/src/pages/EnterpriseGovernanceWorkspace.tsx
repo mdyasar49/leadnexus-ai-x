@@ -102,7 +102,7 @@ export const EnterpriseGovernanceWorkspace: React.FC = () => {
     setMaskedOutput({
       email: rawEmail ? rawEmail[0] + '***' + rawEmail.split('@')[0].slice(-1) + '@' + rawEmail.split('@')[1] : '',
       phone: rawPhone ? '+1 ***-***-' + rawPhone.slice(-4) : '',
-      salary: '$150,000' ? '$50k - $250k (Confidential)' : '',
+      salary: '$50k - $250k (Confidential)',
     });
   };
 

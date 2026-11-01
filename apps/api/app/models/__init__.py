@@ -424,6 +424,14 @@ from app.models.data_lifecycle import (
     ArchiveTombstone,
     LifecycleTransitionEvent,
 )
+from app.models.events import (
+    OutboxStatus,
+    ReplayStatus,
+    OutboxEvent,
+    EventSubscription,
+    ConsumerOffset,
+    EventReplayJob,
+)
 from app.models.migration import (
     MigrationPhase,
     BackfillStatus,
@@ -862,4 +870,10 @@ __all__ = [
     "BackfillJob",
     "ReconciliationJob",
     "APIVersionContract",
+    "OutboxStatus",
+    "ReplayStatus",
+    "OutboxEvent",
+    "EventSubscription",
+    "ConsumerOffset",
+    "EventReplayJob",
 ]

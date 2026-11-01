@@ -18,7 +18,8 @@ import {
   BarChart2,
   Workflow,
   Share2,
-  Code
+  Code,
+  Radio
 } from 'lucide-react';
 
 import AutonomousResearchWorkspace from './pages/AutonomousResearchWorkspace';
@@ -27,6 +28,7 @@ import { EnterpriseDataLifecycleWorkspace } from './pages/EnterpriseDataLifecycl
 import { EnterpriseGovernanceWorkspace } from './pages/EnterpriseGovernanceWorkspace';
 import EnterpriseIntegrationsWorkspace from './pages/EnterpriseIntegrationsWorkspace';
 import { EnterpriseMigrationWorkspace } from './pages/EnterpriseMigrationWorkspace';
+import EnterpriseEventsWorkspace from './pages/EnterpriseEventsWorkspace';
 import { EnterprisePerformanceWorkspace } from './pages/EnterprisePerformanceWorkspace';
 import { EnterpriseResilienceWorkspace } from './pages/EnterpriseResilienceWorkspace';
 import KnowledgeOntologyWorkspace from './pages/KnowledgeOntologyWorkspace';
@@ -46,6 +48,7 @@ export default function App() {
     { label: 'Performance & Cost', icon: <BarChart2 size={18} />, component: <EnterprisePerformanceWorkspace /> },
     { label: 'Lifecycle & Archive', icon: <Workflow size={18} />, component: <EnterpriseDataLifecycleWorkspace /> },
     { label: 'Zero-Downtime Migration', icon: <GitMerge size={18} />, component: <EnterpriseMigrationWorkspace /> },
+    { label: 'Event Bus & Outbox', icon: <Radio size={18} />, component: <EnterpriseEventsWorkspace /> },
   ];
 
   return (
