@@ -542,6 +542,13 @@ from app.models.autonomous_orchestration import (
     MissionCheckpoint,
     MissionHumanReviewItem,
 )
+from app.models.enterprise_telemetry import (
+    TelemetryMetricRecord,
+    DistributedTraceSpan,
+    CostAllocationRecord,
+    TelemetryAlertRule,
+    TelemetryAlertEvent,
+)
 
 __all__ = [
     "SystemMetadata",
@@ -1056,4 +1063,9 @@ __all__ = [
     "MissionStepRecord",
     "MissionCheckpoint",
     "MissionHumanReviewItem",
+    "TelemetryMetricRecord",
+    "DistributedTraceSpan",
+    "CostAllocationRecord",
+    "TelemetryAlertRule",
+    "TelemetryAlertEvent",
 ]

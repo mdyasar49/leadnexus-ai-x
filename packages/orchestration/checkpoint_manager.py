@@ -109,3 +109,4 @@ class CheckpointManager:
             if chk.checkpoint_id == checkpoint_id:
                 return chk
         return None
+

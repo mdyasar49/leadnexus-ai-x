@@ -67,6 +67,7 @@ from app.api.routes.ai_platform_routes import router as ai_platform_router
 from app.api.routes.agent_routes import router as agent_router
 from app.api.routes.document_intelligence_routes import router as document_intelligence_router
 from app.api.routes.orchestration_routes import router as orchestration_router
+from app.api.routes.telemetry_routes import router as telemetry_router
 
 # Root router for top-level probes
 root_router = APIRouter()
@@ -135,6 +136,7 @@ api_v1_router.include_router(ai_platform_router)
 api_v1_router.include_router(agent_router)
 api_v1_router.include_router(document_intelligence_router)
 api_v1_router.include_router(orchestration_router)
+api_v1_router.include_router(telemetry_router)
 
 # Direct /api router for universal compatibility
 api_direct_router = APIRouter(prefix="/api")
@@ -195,3 +197,4 @@ api_direct_router.include_router(ai_platform_router)
 api_direct_router.include_router(agent_router)
 api_direct_router.include_router(document_intelligence_router)
 api_direct_router.include_router(orchestration_router)
+api_direct_router.include_router(telemetry_router)

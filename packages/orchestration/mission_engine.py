@@ -363,3 +363,4 @@ class MissionEngine:
         if mission_id not in self.active_missions:
             raise ValueError(f"Mission '{mission_id}' not found")
         return self.active_missions[mission_id]
+
