@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box,
   AppBar,
@@ -6,7 +6,9 @@ import {
   Typography,
   Tabs,
   Tab,
-  Chip
+  Chip,
+  Badge,
+  Button
 } from '@mui/material';
 import {
   Shield,
@@ -22,9 +24,13 @@ import {
   Radio,
   Zap,
   Activity,
-  Globe
+  Globe,
+  BookmarkCheck,
+  Sparkles
 } from 'lucide-react';
 
+import B2BLeadSearchWorkspace from './pages/B2BLeadSearchWorkspace';
+import B2BSavedLeadsWorkspace from './pages/B2BSavedLeadsWorkspace';
 import AutonomousResearchWorkspace from './pages/AutonomousResearchWorkspace';
 import { DeveloperPlatformWorkspace } from './pages/DeveloperPlatformWorkspace';
 import { EnterpriseDataLifecycleWorkspace } from './pages/EnterpriseDataLifecycleWorkspace';
@@ -42,9 +48,49 @@ import KnowledgeRetrievalWorkspace from './pages/KnowledgeRetrievalWorkspace';
 
 export default function App() {
   const [currentTab, setCurrentTab] = useState(0);
+  const [savedCount, setSavedCount] = useState<number>(0);
+
+  // Poll or refresh saved count
+  const refreshSavedCount = useCallback(async () => {
+    try {
+      const res = await fetch('/api/leads/count');
+      if (res.ok) {
+        const data = await res.json();
+        setSavedCount(data.saved_count || 0);
+      }
+    } catch (err) {
+      console.warn('Failed to fetch saved count:', err);
+    }
+  }, []);
+
+  useEffect(() => {
+    refreshSavedCount();
+    const interval = setInterval(refreshSavedCount, 15000);
+    return () => clearInterval(interval);
+  }, [refreshSavedCount]);
 
   const workspaces = [
-    { label: 'Autonomous Research', icon: <Search size={18} />, component: <AutonomousResearchWorkspace /> },
+    {
+      label: 'B2B Lead Search',
+      icon: <Search size={18} />,
+      component: (
+        <B2BLeadSearchWorkspace
+          onLeadSaved={refreshSavedCount}
+          onNavigateToSaved={() => setCurrentTab(1)}
+        />
+      ),
+    },
+    {
+      label: `Saved Leads (${savedCount})`,
+      icon: <BookmarkCheck size={18} />,
+      component: (
+        <B2BSavedLeadsWorkspace
+          onLeadCountChange={refreshSavedCount}
+          onNavigateToSearch={() => setCurrentTab(0)}
+        />
+      ),
+    },
+    { label: 'Autonomous Research', icon: <Sparkles size={18} />, component: <AutonomousResearchWorkspace /> },
     { label: 'RAG Retrieval', icon: <Cpu size={18} />, component: <KnowledgeRetrievalWorkspace /> },
     { label: 'Semantic Ontology', icon: <Database size={18} />, component: <KnowledgeOntologyWorkspace /> },
     { label: 'Integrations & APIs', icon: <Share2 size={18} />, component: <EnterpriseIntegrationsWorkspace /> },
@@ -86,14 +132,30 @@ export default function App() {
                 LeadNexus AI X
               </Typography>
               <Typography variant="caption" sx={{ color: '#94a3b8' }}>
-                Hyper-Scale Enterprise Lead Intelligence Platform • Phases 1–33
+                B2B Lead Research & Intelligence Platform • Master Release
               </Typography>
             </Box>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-            <Chip label="746 API Endpoints" size="small" color="primary" variant="outlined" />
-            <Chip label="PostgreSQL Truth" size="small" sx={{ bgcolor: '#1e293b', color: '#38bdf8' }} />
-            <Chip label="Zero CRM" size="small" sx={{ bgcolor: '#334155', color: '#f1f5f9' }} />
+            <Button
+              variant={currentTab === 1 ? 'contained' : 'outlined'}
+              size="small"
+              startIcon={<BookmarkCheck size={16} />}
+              onClick={() => setCurrentTab(1)}
+              sx={{
+                borderRadius: 2,
+                textTransform: 'none',
+                fontWeight: 700,
+                bgcolor: currentTab === 1 ? '#0284c7' : 'transparent',
+                borderColor: '#0284c7',
+                color: '#ffffff',
+                '&:hover': { bgcolor: currentTab === 1 ? '#0369a1' : 'rgba(2, 132, 199, 0.1)' }
+              }}
+            >
+              Saved Leads ({savedCount})
+            </Button>
+            <Chip label="PostgreSQL Truth" size="small" sx={{ bgcolor: '#1e293b', color: '#38bdf8', fontWeight: 600 }} />
+            <Chip label="Dual CSV/Excel" size="small" sx={{ bgcolor: '#064e3b', color: '#6ee7b7', fontWeight: 600 }} />
             <Chip label="Production Ready" size="small" color="success" />
           </Box>
         </Toolbar>
@@ -144,7 +206,7 @@ export default function App() {
           fontSize: 12
         }}
       >
-        LeadNexus AI X • Enterprise Intelligence & Autonomous Research System • Built for @mdyasar49
+        LeadNexus AI X • Enterprise B2B Lead Intelligence Platform • Built for @mdyasar49
       </Box>
     </Box>
   );

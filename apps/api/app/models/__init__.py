@@ -449,6 +449,7 @@ from app.models.multi_region import (
     FailoverExecutionJob,
     RegionalHealthHeartbeat,
 )
+from app.models.saved_lead import SavedLead
 from app.models.migration import (
     MigrationPhase,
     BackfillStatus,
@@ -904,4 +905,5 @@ __all__ = [
     "TenantRegionAffinity",
     "FailoverExecutionJob",
     "RegionalHealthHeartbeat",
+    "SavedLead",
 ]

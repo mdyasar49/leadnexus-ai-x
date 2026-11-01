@@ -59,6 +59,7 @@ from app.api.routes.event_routes import router as event_router
 from app.api.routes.enterprise_webhook_routes import router as webhook_router
 from app.api.routes.digital_twin_routes import router as simulation_router
 from app.api.routes.multi_region_routes import router as multi_region_router
+from app.api.routes.direct_lead_routes import router as direct_lead_router
 
 # Root router for top-level probes
 root_router = APIRouter()
@@ -66,6 +67,7 @@ root_router.include_router(health_router)
 
 # Versioned API v1 Router
 api_v1_router = APIRouter(prefix="/api/v1")
+api_v1_router.include_router(direct_lead_router)
 api_v1_router.include_router(system_router)
 api_v1_router.include_router(auth_router)
 api_v1_router.include_router(tenants_router)
@@ -122,6 +124,7 @@ api_v1_router.include_router(multi_region_router)
 
 # Direct /api router for universal compatibility
 api_direct_router = APIRouter(prefix="/api")
+api_direct_router.include_router(direct_lead_router)
 api_direct_router.include_router(discovery_router)
 api_direct_router.include_router(sources_router)
 api_direct_router.include_router(runs_router)
