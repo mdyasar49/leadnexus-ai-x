@@ -555,6 +555,12 @@ from app.models.self_healing_remediation import (
     RemediationActionExecution,
     RemediationRateLimitLog,
 )
+from app.models.entity_graph import (
+    GraphNodeRecord,
+    GraphEdgeRecord,
+    NodeType,
+    EdgeType,
+)
 
 __all__ = [
     "SystemMetadata",
@@ -1078,4 +1084,8 @@ __all__ = [
     "RemediationIncident",
     "RemediationActionExecution",
     "RemediationRateLimitLog",
+    "GraphNodeRecord",
+    "GraphEdgeRecord",
+    "NodeType",
+    "EdgeType",
 ]
