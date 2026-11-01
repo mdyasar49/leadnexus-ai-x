@@ -59,6 +59,7 @@ import EnterpriseMissionOrchestrationWorkspace from './pages/EnterpriseMissionOr
 import EnterpriseTelemetryWorkspace from './pages/EnterpriseTelemetryWorkspace';
 import EnterpriseSelfHealingWorkspace from './pages/EnterpriseSelfHealingWorkspace';
 import EnterpriseEntityGraphWorkspace from './pages/EnterpriseEntityGraphWorkspace';
+import EnterpriseSignalStreamingWorkspace from './pages/EnterpriseSignalStreamingWorkspace';
 import { EnterprisePerformanceWorkspace } from './pages/EnterprisePerformanceWorkspace';
 import { EnterpriseResilienceWorkspace } from './pages/EnterpriseResilienceWorkspace';
 import KnowledgeOntologyWorkspace from './pages/KnowledgeOntologyWorkspace';
@@ -133,6 +134,7 @@ export default function App() {
     { label: 'Telemetry & Observability (P44)', icon: <BarChart2 size={18} />, component: <EnterpriseTelemetryWorkspace /> },
     { label: 'Self-Healing & Reliability (P45)', icon: <HeartPulse size={18} />, component: <EnterpriseSelfHealingWorkspace /> },
     { label: 'Entity Graph & Query (P46)', icon: <Network size={18} />, component: <EnterpriseEntityGraphWorkspace /> },
+    { label: 'Signal Streaming (P47)', icon: <Radio size={18} />, component: <EnterpriseSignalStreamingWorkspace /> },
   ];
 
   return (

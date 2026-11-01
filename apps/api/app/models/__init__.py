@@ -561,6 +561,12 @@ from app.models.entity_graph import (
     NodeType,
     EdgeType,
 )
+from app.models.signal_stream import (
+    LiveSignalRecord,
+    StreamSubscriptionRecord,
+    SignalAnomalyAlert,
+    SignalType,
+)
 
 __all__ = [
     "SystemMetadata",
@@ -1088,4 +1094,8 @@ __all__ = [
     "GraphEdgeRecord",
     "NodeType",
     "EdgeType",
+    "LiveSignalRecord",
+    "StreamSubscriptionRecord",
+    "SignalAnomalyAlert",
+    "SignalType",
 ]
