@@ -149,3 +149,4 @@ class AgentRegistry:
     @classmethod
     def list_all(cls) -> List[AgentDefinition]:
         return list(cls._ROSTER.values())
+

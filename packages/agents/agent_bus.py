@@ -57,3 +57,4 @@ class InterAgentMessageBus:
 
     def get_messages_for_agent(self, agent_type: str) -> List[Dict[str, Any]]:
         return [m for m in self._messages if m.get("recipient_agent") in (agent_type, "BROADCAST")]
+

@@ -302,3 +302,4 @@ def get_agents_health(
         })
 
     return {"agents_health": health_report}
+

@@ -190,3 +190,4 @@ class DocumentProvenanceRecord(Base):
             "confidence": self.confidence,
             "created_at": self.created_at.isoformat() if self.created_at else None,
         }
+

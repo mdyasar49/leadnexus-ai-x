@@ -536,6 +536,12 @@ from app.models.document_intelligence import (
     DocumentExtractedEntity,
     DocumentProvenanceRecord,
 )
+from app.models.autonomous_orchestration import (
+    MissionRecord,
+    MissionStepRecord,
+    MissionCheckpoint,
+    MissionHumanReviewItem,
+)
 
 __all__ = [
     "SystemMetadata",
@@ -1046,4 +1052,8 @@ __all__ = [
     "DocumentTable",
     "DocumentExtractedEntity",
     "DocumentProvenanceRecord",
+    "MissionRecord",
+    "MissionStepRecord",
+    "MissionCheckpoint",
+    "MissionHumanReviewItem",
 ]

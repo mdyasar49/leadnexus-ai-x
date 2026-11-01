@@ -65,3 +65,4 @@ class DocumentSanitizer:
             "quality_score": quality_score,
             "is_safe": malware_status == "CLEAN",
         }
+

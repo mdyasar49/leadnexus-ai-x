@@ -159,3 +159,4 @@ class AgentEvaluationMetric(Base):
     avg_tokens_per_task = Column(Float, default=0.0, nullable=False)
     hallucination_score = Column(Float, default=0.0, nullable=False)  # 0.0 = perfect, lower is better
     evaluated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+

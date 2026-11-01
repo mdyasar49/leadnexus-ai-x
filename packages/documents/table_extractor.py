@@ -77,3 +77,4 @@ class TableExtractor:
                 record[h] = val
             records.append(record)
         return records
+

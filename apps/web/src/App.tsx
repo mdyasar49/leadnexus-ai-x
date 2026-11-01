@@ -31,7 +31,8 @@ import {
   Network,
   Bot,
   Users,
-  FileText
+  FileText,
+  GitFork
 } from 'lucide-react';
 
 import B2BLeadSearchWorkspace from './pages/B2BLeadSearchWorkspace';
@@ -53,6 +54,7 @@ import EnterpriseDataFabricWorkspace from './pages/EnterpriseDataFabricWorkspace
 import EnterpriseAIModelPlatformWorkspace from './pages/EnterpriseAIModelPlatformWorkspace';
 import EnterpriseMultiAgentWorkspace from './pages/EnterpriseMultiAgentWorkspace';
 import EnterpriseDocumentIntelligenceWorkspace from './pages/EnterpriseDocumentIntelligenceWorkspace';
+import EnterpriseMissionOrchestrationWorkspace from './pages/EnterpriseMissionOrchestrationWorkspace';
 import { EnterprisePerformanceWorkspace } from './pages/EnterprisePerformanceWorkspace';
 import { EnterpriseResilienceWorkspace } from './pages/EnterpriseResilienceWorkspace';
 import KnowledgeOntologyWorkspace from './pages/KnowledgeOntologyWorkspace';
@@ -123,6 +125,7 @@ export default function App() {
     { label: 'AI Model Platform (P40)', icon: <Bot size={18} />, component: <EnterpriseAIModelPlatformWorkspace /> },
     { label: 'Multi-Agent Platform (P41)', icon: <Users size={18} />, component: <EnterpriseMultiAgentWorkspace /> },
     { label: 'Document Intelligence (P42)', icon: <FileText size={18} />, component: <EnterpriseDocumentIntelligenceWorkspace /> },
+    { label: 'Mission Orchestration (P43)', icon: <GitFork size={18} />, component: <EnterpriseMissionOrchestrationWorkspace /> },
   ];
 
   return (

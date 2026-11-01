@@ -46,3 +46,4 @@ class DocumentProvenanceTracker:
         """Verifies if a provided source snippet matches the recorded proof hash."""
         computed = hashlib.sha256(source_snippet.encode("utf-8")).hexdigest()
         return computed == sha256_proof
+

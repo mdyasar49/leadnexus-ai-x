@@ -838,3 +838,4 @@ export const EnterpriseDocumentIntelligenceWorkspace: React.FC = () => {
 };
 
 export default EnterpriseDocumentIntelligenceWorkspace;
+

@@ -253,3 +253,4 @@ class DocumentParser:
         except Exception:
             chunks = cls._parse_txt(text)
         return chunks, tables
+

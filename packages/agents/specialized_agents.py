@@ -278,3 +278,4 @@ def get_specialized_agent(agent_type: str) -> AutonomousAgent:
     if agent_type not in mapping:
         raise KeyError(f"Specialized agent '{agent_type}' is not recognized.")
     return mapping[agent_type]()
+

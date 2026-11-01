@@ -339,3 +339,4 @@ def parse_direct_text(
         "entities": entities,
         "total_tokens": parse_result["total_tokens"],
     }
+
