@@ -129,3 +129,4 @@ class ModelSafetyPolicy(Base):
     daily_spend_limit_usd = Column(Float, default=50.0, nullable=False)
     is_active = Column(Boolean, default=True, nullable=False)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+

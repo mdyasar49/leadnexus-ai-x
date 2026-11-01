@@ -518,6 +518,17 @@ from app.models.enterprise_ai_platform import (
     ModelInferenceLog,
     ModelSafetyPolicy,
 )
+from app.models.multi_agent_platform import (
+    AgentTypeEnum,
+    AgentStatus,
+    AgentTaskPriority,
+    ArbitrationStrategy,
+    AgentTaskRecord,
+    AgentMemoryEntry,
+    AgentMessageBusRecord,
+    AgentArbitrationRecord,
+    AgentEvaluationMetric,
+)
 
 __all__ = [
     "SystemMetadata",
@@ -1014,4 +1025,13 @@ __all__ = [
     "PromptTemplateRecord",
     "ModelInferenceLog",
     "ModelSafetyPolicy",
+    "AgentTypeEnum",
+    "AgentStatus",
+    "AgentTaskPriority",
+    "ArbitrationStrategy",
+    "AgentTaskRecord",
+    "AgentMemoryEntry",
+    "AgentMessageBusRecord",
+    "AgentArbitrationRecord",
+    "AgentEvaluationMetric",
 ]

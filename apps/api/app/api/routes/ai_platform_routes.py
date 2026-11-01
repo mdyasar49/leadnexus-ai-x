@@ -368,3 +368,4 @@ def create_safety_policy(
     db.commit()
     db.refresh(pol)
     return {"status": "created", "policy": pol}
+

@@ -75,3 +75,4 @@ class ModelSafetyGuard:
             return cls.sanitize_pii(prompt)
 
         return prompt
+

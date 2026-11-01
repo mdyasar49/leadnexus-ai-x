@@ -42,3 +42,4 @@ class TokenCostTracker:
                 f"Workspace daily AI spend limit reached: projected ${projected:.4f} > limit ${daily_limit_usd:.2f}."
             )
         return True
+

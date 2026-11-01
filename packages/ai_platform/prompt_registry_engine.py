@@ -54,3 +54,4 @@ class PromptRegistryEngine:
         """Computes deterministic SHA-256 fingerprint for prompt text."""
         content = f"{system_instructions or ''}::{template_text}"
         return hashlib.sha256(content.encode("utf-8")).hexdigest()[:16]
+

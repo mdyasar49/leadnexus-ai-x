@@ -179,3 +179,4 @@ def get_ai_provider(provider_type: str, model_name: str, should_fail: bool = Fal
     else:
         # Default fallback to mock provider
         return MockAIProvider(model_name=model_name, should_fail=should_fail)
+
