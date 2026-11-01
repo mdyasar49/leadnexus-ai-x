@@ -138,3 +138,4 @@ class SCIMEngine:
                     del updated[path]
 
         return updated
+

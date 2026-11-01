@@ -93,3 +93,4 @@ def get_circuit_breaker(service_name: str) -> GatewayCircuitBreaker:
     if service_name not in _registry:
         _registry[service_name] = GatewayCircuitBreaker(service_name)
     return _registry[service_name]
+

@@ -82,3 +82,4 @@ class EdgeAbuseGuard:
                         cls.inspect(item, context=f"{context}.{k}[{i}]")
                     elif isinstance(item, dict):
                         cls.inspect_dict(item, context=f"{context}.{k}[{i}]")
+

@@ -100,3 +100,4 @@ class SessionPostureManager:
                 s.is_revoked = True
                 revoked_count += 1
         return revoked_count
+

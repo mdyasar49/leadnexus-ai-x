@@ -137,3 +137,4 @@ class SAMLOIDCEngine:
                 highest_score = role_hierarchy.get(mapped_role, 0)
 
         return highest_role
+

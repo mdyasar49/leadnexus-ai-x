@@ -113,3 +113,4 @@ class EdgeCacheManager:
         """Clears all cached entries and tag indexes."""
         cls._cache.clear()
         cls._tag_index.clear()
+

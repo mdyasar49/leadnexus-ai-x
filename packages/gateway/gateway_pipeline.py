@@ -147,3 +147,4 @@ class EnterpriseGatewayPipeline:
             cache_hit=False,
             trace_id=trace_id
         )
+

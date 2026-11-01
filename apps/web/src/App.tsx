@@ -27,7 +27,8 @@ import {
   Globe,
   BookmarkCheck,
   Sparkles,
-  UserCheck
+  UserCheck,
+  Network
 } from 'lucide-react';
 
 import B2BLeadSearchWorkspace from './pages/B2BLeadSearchWorkspace';
@@ -45,6 +46,7 @@ import { EnterpriseMultiRegionWorkspace } from './pages/EnterpriseMultiRegionWor
 import EnterpriseEventDrivenWorkspace from './pages/EnterpriseEventDrivenWorkspace';
 import EnterpriseAPIGatewayWorkspace from './pages/EnterpriseAPIGatewayWorkspace';
 import EnterpriseIdentityWorkspace from './pages/EnterpriseIdentityWorkspace';
+import EnterpriseDataFabricWorkspace from './pages/EnterpriseDataFabricWorkspace';
 import { EnterprisePerformanceWorkspace } from './pages/EnterprisePerformanceWorkspace';
 import { EnterpriseResilienceWorkspace } from './pages/EnterpriseResilienceWorkspace';
 import KnowledgeOntologyWorkspace from './pages/KnowledgeOntologyWorkspace';
@@ -111,6 +113,7 @@ export default function App() {
     { label: 'Event-Driven CQRS (P36)', icon: <Radio size={18} />, component: <EnterpriseEventDrivenWorkspace /> },
     { label: 'API Gateway & Edge (P37)', icon: <Shield size={18} />, component: <EnterpriseAPIGatewayWorkspace /> },
     { label: 'Identity & Access (P38)', icon: <UserCheck size={18} />, component: <EnterpriseIdentityWorkspace /> },
+    { label: 'Data Fabric (P39)', icon: <Network size={18} />, component: <EnterpriseDataFabricWorkspace /> },
   ];
 
   return (

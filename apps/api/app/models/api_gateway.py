@@ -83,3 +83,4 @@ class GatewayCircuitState(Base):
     tripped_at = Column(DateTime(timezone=True), nullable=True)
     last_probe_at = Column(DateTime(timezone=True), nullable=True)
     updated_at = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
+

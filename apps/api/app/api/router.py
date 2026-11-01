@@ -62,6 +62,7 @@ from app.api.routes.multi_region_routes import router as multi_region_router
 from app.api.routes.direct_lead_routes import router as direct_lead_router
 from app.api.routes.api_gateway_routes import router as gateway_router
 from app.api.routes.identity_routes import router as identity_router
+from app.api.routes.data_fabric_routes import router as data_fabric_router
 
 # Root router for top-level probes
 root_router = APIRouter()
@@ -125,6 +126,7 @@ api_v1_router.include_router(simulation_router)
 api_v1_router.include_router(multi_region_router)
 api_v1_router.include_router(gateway_router)
 api_v1_router.include_router(identity_router)
+api_v1_router.include_router(data_fabric_router)
 
 # Direct /api router for universal compatibility
 api_direct_router = APIRouter(prefix="/api")
@@ -180,3 +182,4 @@ api_direct_router.include_router(simulation_router)
 api_direct_router.include_router(multi_region_router)
 api_direct_router.include_router(gateway_router)
 api_direct_router.include_router(identity_router)
+api_direct_router.include_router(data_fabric_router)

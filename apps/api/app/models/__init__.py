@@ -496,6 +496,18 @@ from app.models.enterprise_identity import (
     ActiveUserSession,
     IdentityAuditEvent,
 )
+from app.models.enterprise_data_fabric import (
+    DataDomainEnum,
+    DataClassification,
+    ContractStatus,
+    PolicyEnforcementAction,
+    DataContractRecord,
+    DataCatalogEntry,
+    DataLineageEdge,
+    CrossDomainRelation,
+    DataQualityAssessment,
+    DataPolicyEnforcement,
+)
 
 __all__ = [
     "SystemMetadata",
@@ -974,4 +986,14 @@ __all__ = [
     "ServiceIdentity",
     "ActiveUserSession",
     "IdentityAuditEvent",
+    "DataDomainEnum",
+    "DataClassification",
+    "ContractStatus",
+    "PolicyEnforcementAction",
+    "DataContractRecord",
+    "DataCatalogEntry",
+    "DataLineageEdge",
+    "CrossDomainRelation",
+    "DataQualityAssessment",
+    "DataPolicyEnforcement",
 ]
