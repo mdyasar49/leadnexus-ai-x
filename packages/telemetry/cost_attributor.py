@@ -105,3 +105,4 @@ class CostAttributor:
             "by_category_usd": {k: round(v / 1_000_000.0, 6) for k, v in by_category.items()},
             "by_subsystem_usd": {k: round(v / 1_000_000.0, 6) for k, v in by_subsystem.items()},
         }
+

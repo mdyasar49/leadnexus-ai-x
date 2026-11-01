@@ -120,3 +120,4 @@ class MetricsCollector:
             lines.append(f"{clean_name}_ms_count {len(values)}")
 
         return "\n".join(lines) + "\n"
+

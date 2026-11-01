@@ -32,7 +32,8 @@ import {
   Bot,
   Users,
   FileText,
-  GitFork
+  GitFork,
+  HeartPulse
 } from 'lucide-react';
 
 import B2BLeadSearchWorkspace from './pages/B2BLeadSearchWorkspace';
@@ -56,6 +57,7 @@ import EnterpriseMultiAgentWorkspace from './pages/EnterpriseMultiAgentWorkspace
 import EnterpriseDocumentIntelligenceWorkspace from './pages/EnterpriseDocumentIntelligenceWorkspace';
 import EnterpriseMissionOrchestrationWorkspace from './pages/EnterpriseMissionOrchestrationWorkspace';
 import EnterpriseTelemetryWorkspace from './pages/EnterpriseTelemetryWorkspace';
+import EnterpriseSelfHealingWorkspace from './pages/EnterpriseSelfHealingWorkspace';
 import { EnterprisePerformanceWorkspace } from './pages/EnterprisePerformanceWorkspace';
 import { EnterpriseResilienceWorkspace } from './pages/EnterpriseResilienceWorkspace';
 import KnowledgeOntologyWorkspace from './pages/KnowledgeOntologyWorkspace';
@@ -128,6 +130,7 @@ export default function App() {
     { label: 'Document Intelligence (P42)', icon: <FileText size={18} />, component: <EnterpriseDocumentIntelligenceWorkspace /> },
     { label: 'Mission Orchestration (P43)', icon: <GitFork size={18} />, component: <EnterpriseMissionOrchestrationWorkspace /> },
     { label: 'Telemetry & Observability (P44)', icon: <BarChart2 size={18} />, component: <EnterpriseTelemetryWorkspace /> },
+    { label: 'Self-Healing & Reliability (P45)', icon: <HeartPulse size={18} />, component: <EnterpriseSelfHealingWorkspace /> },
   ];
 
   return (

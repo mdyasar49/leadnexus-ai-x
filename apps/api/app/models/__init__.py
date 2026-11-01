@@ -549,6 +549,12 @@ from app.models.enterprise_telemetry import (
     TelemetryAlertRule,
     TelemetryAlertEvent,
 )
+from app.models.self_healing_remediation import (
+    RemediationPlaybook,
+    RemediationIncident,
+    RemediationActionExecution,
+    RemediationRateLimitLog,
+)
 
 __all__ = [
     "SystemMetadata",
@@ -1068,4 +1074,8 @@ __all__ = [
     "CostAllocationRecord",
     "TelemetryAlertRule",
     "TelemetryAlertEvent",
+    "RemediationPlaybook",
+    "RemediationIncident",
+    "RemediationActionExecution",
+    "RemediationRateLimitLog",
 ]

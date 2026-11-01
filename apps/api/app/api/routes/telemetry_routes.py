@@ -290,3 +290,4 @@ def resolve_alert_event(
         db.commit()
 
     return ev.to_dict()
+

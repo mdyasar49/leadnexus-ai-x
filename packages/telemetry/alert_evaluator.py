@@ -140,3 +140,4 @@ class AlertEvaluator:
                 e.resolved_at = datetime.now(timezone.utc).isoformat()
                 return e
         return None
+

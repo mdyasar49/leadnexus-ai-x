@@ -167,3 +167,4 @@ class TelemetryAlertEvent(Base):
             "triggered_at": self.triggered_at.isoformat() if self.triggered_at else None,
             "resolved_at": self.resolved_at.isoformat() if self.resolved_at else None,
         }
+
