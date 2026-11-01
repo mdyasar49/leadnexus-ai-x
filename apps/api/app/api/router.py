@@ -65,6 +65,7 @@ from app.api.routes.identity_routes import router as identity_router
 from app.api.routes.data_fabric_routes import router as data_fabric_router
 from app.api.routes.ai_platform_routes import router as ai_platform_router
 from app.api.routes.agent_routes import router as agent_router
+from app.api.routes.document_intelligence_routes import router as document_intelligence_router
 
 # Root router for top-level probes
 root_router = APIRouter()
@@ -131,6 +132,7 @@ api_v1_router.include_router(identity_router)
 api_v1_router.include_router(data_fabric_router)
 api_v1_router.include_router(ai_platform_router)
 api_v1_router.include_router(agent_router)
+api_v1_router.include_router(document_intelligence_router)
 
 # Direct /api router for universal compatibility
 api_direct_router = APIRouter(prefix="/api")
@@ -189,3 +191,4 @@ api_direct_router.include_router(identity_router)
 api_direct_router.include_router(data_fabric_router)
 api_direct_router.include_router(ai_platform_router)
 api_direct_router.include_router(agent_router)
+api_direct_router.include_router(document_intelligence_router)

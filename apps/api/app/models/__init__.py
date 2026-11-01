@@ -529,6 +529,13 @@ from app.models.multi_agent_platform import (
     AgentArbitrationRecord,
     AgentEvaluationMetric,
 )
+from app.models.document_intelligence import (
+    DocumentRecord,
+    DocumentChunk,
+    DocumentTable,
+    DocumentExtractedEntity,
+    DocumentProvenanceRecord,
+)
 
 __all__ = [
     "SystemMetadata",
@@ -1034,4 +1041,9 @@ __all__ = [
     "AgentMessageBusRecord",
     "AgentArbitrationRecord",
     "AgentEvaluationMetric",
+    "DocumentRecord",
+    "DocumentChunk",
+    "DocumentTable",
+    "DocumentExtractedEntity",
+    "DocumentProvenanceRecord",
 ]

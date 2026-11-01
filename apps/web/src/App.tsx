@@ -30,7 +30,8 @@ import {
   UserCheck,
   Network,
   Bot,
-  Users
+  Users,
+  FileText
 } from 'lucide-react';
 
 import B2BLeadSearchWorkspace from './pages/B2BLeadSearchWorkspace';
@@ -51,6 +52,7 @@ import EnterpriseIdentityWorkspace from './pages/EnterpriseIdentityWorkspace';
 import EnterpriseDataFabricWorkspace from './pages/EnterpriseDataFabricWorkspace';
 import EnterpriseAIModelPlatformWorkspace from './pages/EnterpriseAIModelPlatformWorkspace';
 import EnterpriseMultiAgentWorkspace from './pages/EnterpriseMultiAgentWorkspace';
+import EnterpriseDocumentIntelligenceWorkspace from './pages/EnterpriseDocumentIntelligenceWorkspace';
 import { EnterprisePerformanceWorkspace } from './pages/EnterprisePerformanceWorkspace';
 import { EnterpriseResilienceWorkspace } from './pages/EnterpriseResilienceWorkspace';
 import KnowledgeOntologyWorkspace from './pages/KnowledgeOntologyWorkspace';
@@ -120,6 +122,7 @@ export default function App() {
     { label: 'Data Fabric (P39)', icon: <Network size={18} />, component: <EnterpriseDataFabricWorkspace /> },
     { label: 'AI Model Platform (P40)', icon: <Bot size={18} />, component: <EnterpriseAIModelPlatformWorkspace /> },
     { label: 'Multi-Agent Platform (P41)', icon: <Users size={18} />, component: <EnterpriseMultiAgentWorkspace /> },
+    { label: 'Document Intelligence (P42)', icon: <FileText size={18} />, component: <EnterpriseDocumentIntelligenceWorkspace /> },
   ];
 
   return (
