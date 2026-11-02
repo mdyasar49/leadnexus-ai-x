@@ -1,0 +1,2134 @@
+Phase 36: Enterprise Event-Driven Architecture, Distributed Event Bus, CQRS, Event Sourcing \u0026 Real-Time Intelligence\\"}\
+\
+# LeadNexus AI X — Phase 36\
+## Enterprise Event-Driven Architecture, Distributed Event Bus, CQRS, Event Sourcing, Reliable Messaging \u0026 Real-Time Intelligence\
+\
+You are a **Principal Distributed Systems Architect, Event-Driven Architecture Specialist, CQRS/Event-Sourcing Architect, Streaming Platform Engineer, Data Platform Architect, SRE, Security Architect, and Enterprise Backend Engineer**.\
+\
+Continue the existing **LeadNexus AI X — Hyper-Scale Enterprise Lead Intelligence Platform** from **Phases 1–35**.\
+\
+Do not redesign or remove previous architecture. Extend it safely.\
+\
+---\
+\
+# 1. PRIMARY OBJECTIVE\
+\
+Build a production-grade **event-driven architecture** that connects the entire LeadNexus AI X platform through reliable, versioned, observable, tenant-isolated, idempotent events.\
+\
+The platform must support:\
+\
+```text\
+DATABASE CHANGE\
+→ DOMAIN EVENT\
+→ EVENT BUS\
+→ EVENT ROUTING\
+→ EVENT CONSUMER\
+→ PROJECTION\
+→ WORKFLOW\
+→ RESEARCH\
+→ ENRICHMENT\
+→ AI\
+→ MONITORING\
+→ ALERT\
+→ ANALYTICS\
+```\
+\
+The event architecture must support:\
+\
+- real-time intelligence\
+- asynchronous processing\
+- workflow automation\
+- research orchestration\
+- monitoring\
+- alerts\
+- analytics\
+- projections\
+- integrations\
+- auditability\
+- replay\
+- recovery\
+- multi-region operation\
+\
+---\
+\
+# 2. ABSOLUTE RULES\
+\
+1. PostgreSQL remains the canonical source of truth.\
+2. Events are not automatically the source of truth.\
+3. Event streams must be durable and replayable.\
+4. Every event must have a unique ID.\
+5. Every event must be versioned.\
+6. Every consumer must be idempotent.\
+7. Events must be tenant-scoped.\
+8. Cross-tenant events are forbidden.\
+9. Event payloads must respect data classification.\
+10. Sensitive data must not be broadcast unnecessarily.\
+11. Event schemas must be governed.\
+12. Breaking event changes require versioning.\
+13. Event ordering must never be assumed globally unless explicitly guaranteed.\
+14. At-least-once delivery is the default.\
+15. Exactly-once behavior may only be claimed where technically proven.\
+16. Duplicate delivery must be safe.\
+17. Failed messages must enter controlled retry/DLQ paths.\
+18. Replay must be bounded and audited.\
+19. Consumers must not execute arbitrary code from event payloads.\
+20. AI cannot publish privileged operational commands.\
+21. External web content remains untrusted.\
+22. Google Sheets remains optional.\
+23. CRM is not implemented.\
+24. Automatic outreach is not implemented.\
+\
+---\
+\
+# 3. EVENT-DRIVEN ARCHITECTURE\
+\
+Target:\
+\
+```text\
+                    PostgreSQL\
+                        |\
+                 Transaction Boundary\
+                        |\
+                   Outbox Event\
+                        |\
+                 Event Publisher\
+                        |\
+                  EVENT BUS\
+                        |\
+        +---------------+----------------+\
+        |               |                |\
+     Research         Workflow        Monitoring\
+        |               |                |\
+     Enrichment       Alerts          Analytics\
+        |               |                |\
+       AI              Graph          Search\
+        |               |                |\
+     Evidence        Projections     Integrations\
+```\
+\
+Use asynchronous processing wherever appropriate.\
+\
+---\
+\
+# 4. DOMAIN EVENT MODEL\
+\
+Create a common event envelope.\
+\
+Required fields:\
+\
+```text\
+event_id\
+event_type\
+event_version\
+tenant_id\
+aggregate_type\
+aggregate_id\
+occurred_at\
+published_at\
+source_service\
+source_region\
+correlation_id\
+causation_id\
+sequence\
+schema_version\
+data_classification\
+payload\
+metadata\
+```\
+\
+Optional:\
+\
+```text\
+actor_id\
+request_id\
+workflow_id\
+research_run_id\
+campaign_id\
+trace_id\
+```\
+\
+---\
+\
+# 5. EVENT TYPES\
+\
+Define controlled event categories:\
+\
+```text\
+ENTITY\
+COMPANY\
+PERSON\
+CONTACT\
+TECHNOLOGY\
+SIGNAL\
+INTENT\
+LEAD\
+EVIDENCE\
+RESEARCH\
+ENRICHMENT\
+VERIFICATION\
+WORKFLOW\
+REVIEW\
+QUALITY\
+MONITORING\
+ALERT\
+ANALYTICS\
+GRAPH\
+SEARCH\
+INTEGRATION\
+CONNECTOR\
+SHEET\
+GOVERNANCE\
+SECURITY\
+SYSTEM\
+```\
+\
+---\
+\
+# 6. CORE DOMAIN EVENTS\
+\
+Examples:\
+\
+```text\
+CompanyCreated\
+CompanyUpdated\
+CompanyMerged\
+CompanySplit\
+\
+PersonCreated\
+PersonUpdated\
+PersonRoleChanged\
+\
+ContactDiscovered\
+ContactUpdated\
+ContactVerified\
+ContactVerificationExpired\
+\
+TechnologyDetected\
+TechnologyRemoved\
+\
+EvidenceCreated\
+EvidenceUpdated\
+EvidenceExpired\
+\
+SignalCreated\
+SignalUpdated\
+\
+IntentDetected\
+IntentChanged\
+\
+LeadCreated\
+LeadScoreChanged\
+LeadStatusChanged\
+LeadSuppressed\
+LeadRestored\
+\
+ResearchStarted\
+ResearchTaskCompleted\
+ResearchGapCreated\
+ResearchGapResolved\
+ResearchCompleted\
+\
+EnrichmentStarted\
+EnrichmentCompleted\
+EnrichmentFailed\
+\
+ReviewRequested\
+ReviewCompleted\
+\
+QualityChanged\
+DataBecameStale\
+\
+AlertCreated\
+AlertResolved\
+\
+WorkflowStarted\
+WorkflowCompleted\
+WorkflowFailed\
+```\
+\
+---\
+\
+# 7. SYSTEM EVENTS\
+\
+Create system events:\
+\
+```text\
+RegionFailed\
+RegionRecovered\
+ServiceDegraded\
+ServiceRecovered\
+WorkerStarted\
+WorkerStopped\
+QueueBacklogDetected\
+DatabaseFailoverStarted\
+DatabaseFailoverCompleted\
+ReplicationLagDetected\
+ReplicationRecovered\
+DeploymentStarted\
+DeploymentCompleted\
+DeploymentRolledBack\
+ConfigurationChanged\
+FeatureFlagChanged\
+```\
+\
+---\
+\
+# 8. OUTBOX PATTERN\
+\
+Implement the transactional outbox.\
+\
+Flow:\
+\
+```text\
+BEGIN TRANSACTION\
+    Update Entity\
+    Insert Domain Event into Outbox\
+COMMIT\
+        ↓\
+Outbox Publisher\
+        ↓\
+Event Bus\
+```\
+\
+This prevents:\
+\
+```text\
+DATABASE UPDATED\
++\
+EVENT LOST\
+```\
+\
+---\
+\
+# 9. OUTBOX MODEL\
+\
+Create:\
+\
+```text\
+OutboxEvent\
+OutboxAttempt\
+OutboxCheckpoint\
+OutboxDeadLetter\
+OutboxLease\
+```\
+\
+Fields:\
+\
+```text\
+id\
+tenant_id\
+aggregate_type\
+aggregate_id\
+event_type\
+event_version\
+payload\
+status\
+attempt_count\
+available_at\
+published_at\
+created_at\
+locked_until\
+last_error\
+```\
+\
+Statuses:\
+\
+```text\
+PENDING\
+PUBLISHING\
+PUBLISHED\
+RETRYING\
+FAILED\
+DEAD_LETTER\
+CANCELLED\
+```\
+\
+---\
+\
+# 10. EVENT BUS ABSTRACTION\
+\
+Do not tightly couple business logic to one broker.\
+\
+Create:\
+\
+```text\
+EventBus\
+EventPublisher\
+EventConsumer\
+EventSubscription\
+EventRouter\
+EventSerializer\
+EventDeserializer\
+```\
+\
+Provider abstraction must allow:\
+\
+```text\
+Kafka\
+Redpanda\
+NATS\
+RabbitMQ\
+Cloud Event Bus\
+```\
+\
+without rewriting domain logic.\
+\
+---\
+\
+# 11. TOPIC / STREAM DESIGN\
+\
+Create controlled topic namespaces:\
+\
+```text\
+leadnexus.company\
+leadnexus.person\
+leadnexus.contact\
+leadnexus.evidence\
+leadnexus.signal\
+leadnexus.intent\
+leadnexus.lead\
+leadnexus.research\
+leadnexus.enrichment\
+leadnexus.workflow\
+leadnexus.monitoring\
+leadnexus.alert\
+leadnexus.analytics\
+leadnexus.graph\
+leadnexus.search\
+leadnexus.integration\
+leadnexus.system\
+```\
+\
+Tenant isolation must be enforced at routing/authorization level.\
+\
+---\
+\
+# 12. PARTITIONING\
+\
+Partition events using stable keys.\
+\
+Preferred:\
+\
+```text\
+tenant_id\
+```\
+\
+or:\
+\
+```text\
+tenant_id + aggregate_id\
+```\
+\
+depending on ordering requirements.\
+\
+Never partition randomly when ordering is required.\
+\
+---\
+\
+# 13. ORDERING\
+\
+Guarantee ordering only within explicitly defined boundaries.\
+\
+Examples:\
+\
+```text\
+Company events\
+ordered by company aggregate\
+\
+Lead events\
+ordered by lead aggregate\
+\
+Workflow events\
+ordered by workflow execution\
+```\
+\
+Do not claim global ordering.\
+\
+---\
+\
+# 14. EVENT SEQUENCE\
+\
+Every aggregate may maintain:\
+\
+```text\
+aggregate_version\
+sequence\
+```\
+\
+Example:\
+\
+```text\
+Company\
+version 1\
+version 2\
+version 3\
+```\
+\
+Consumers can detect:\
+\
+```text\
+missing sequence\
+duplicate sequence\
+out-of-order event\
+```\
+\
+---\
+\
+# 15. IDEMPOTENCY\
+\
+Every consumer must support:\
+\
+```text\
+event_id\
+consumer_id\
+processing_status\
+processed_at\
+```\
+\
+Create:\
+\
+```text\
+EventConsumerCheckpoint\
+EventProcessingRecord\
+EventIdempotencyRecord\
+```\
+\
+Duplicate event:\
+\
+```text\
+RECEIVED\
+→ ALREADY_PROCESSED\
+→ ACK\
+```\
+\
+without repeating side effects.\
+\
+---\
+\
+# 16. CONSUMER MODEL\
+\
+Create:\
+\
+```text\
+EventConsumer\
+ConsumerGroup\
+ConsumerSubscription\
+ConsumerCheckpoint\
+ConsumerAttempt\
+ConsumerError\
+ConsumerDeadLetter\
+```\
+\
+Track:\
+\
+- lag\
+- throughput\
+- failure rate\
+- retries\
+- processing latency\
+- DLQ count\
+\
+---\
+\
+# 17. RETRY STRATEGY\
+\
+Use bounded retries.\
+\
+Example:\
+\
+```text\
+attempt 1\
+→ 1 sec\
+\
+attempt 2\
+→ 5 sec\
+\
+attempt 3\
+→ 30 sec\
+\
+attempt 4\
+→ 5 min\
+\
+attempt 5\
+→ DLQ\
+```\
+\
+Do not retry permanent errors indefinitely.\
+\
+---\
+\
+# 18. DEAD LETTER QUEUE\
+\
+Create:\
+\
+```text\
+DeadLetterEvent\
+DeadLetterAttempt\
+DeadLetterReason\
+DeadLetterResolution\
+```\
+\
+Reasons:\
+\
+```text\
+SCHEMA_ERROR\
+VALIDATION_ERROR\
+AUTHORIZATION_ERROR\
+MISSING_ENTITY\
+TEMPORARY_PROVIDER_FAILURE\
+BUG\
+TIMEOUT\
+UNKNOWN\
+```\
+\
+---\
+\
+# 19. DLQ OPERATIONS\
+\
+Support:\
+\
+```text\
+inspect\
+retry\
+retry_from_checkpoint\
+discard\
+suppress\
+repair\
+replay\
+```\
+\
+Every action must be audited.\
+\
+---\
+\
+# 20. EVENT REPLAY\
+\
+Support replay by:\
+\
+```text\
+event_id\
+aggregate\
+tenant\
+event_type\
+time range\
+sequence\
+topic\
+region\
+```\
+\
+Replay modes:\
+\
+```text\
+PROJECTION_REBUILD\
+ANALYTICS_REBUILD\
+SEARCH_REBUILD\
+GRAPH_REBUILD\
+TEST\
+RECOVERY\
+```\
+\
+Never replay production side effects blindly.\
+\
+---\
+\
+# 21. REPLAY SAFETY\
+\
+Before replay:\
+\
+```text\
+validate scope\
+validate tenant\
+validate consumer\
+validate event version\
+validate destination\
+validate side effects\
+```\
+\
+Require approval for high-risk replay.\
+\
+---\
+\
+# 22. EVENT SOURCING\
+\
+Event sourcing may be used selectively.\
+\
+Use event sourcing where historical domain state reconstruction provides real value.\
+\
+Suitable examples:\
+\
+- workflow execution\
+- research execution\
+- review decisions\
+- monitoring state\
+- alert lifecycle\
+\
+Do not convert every PostgreSQL table into event-sourced storage unnecessarily.\
+\
+---\
+\
+# 23. EVENT SOURCING MODEL\
+\
+Create:\
+\
+```text\
+EventSourcedAggregate\
+AggregateEvent\
+AggregateSnapshot\
+AggregateSnapshotVersion\
+AggregateRebuild\
+```\
+\
+Flow:\
+\
+```text\
+Events\
+↓\
+Snapshot\
+↓\
+New Events\
+↓\
+Current State\
+```\
+\
+---\
+\
+# 24. SNAPSHOTS\
+\
+Snapshots must include:\
+\
+```text\
+aggregate_id\
+aggregate_type\
+tenant_id\
+aggregate_version\
+snapshot_version\
+state\
+created_at\
+```\
+\
+Snapshots are optimization artifacts, not canonical evidence replacements.\
+\
+---\
+\
+# 25. CQRS\
+\
+Implement controlled CQRS:\
+\
+```text\
+COMMAND\
+↓\
+VALIDATE\
+↓\
+AUTHORIZE\
+↓\
+WRITE MODEL\
+↓\
+DOMAIN EVENT\
+↓\
+READ MODEL\
+```\
+\
+Commands modify canonical state.\
+\
+Queries use:\
+\
+- PostgreSQL\
+- materialized views\
+- search indexes\
+- graph projections\
+- analytics projections\
+\
+where appropriate.\
+\
+---\
+\
+# 26. COMMAND MODEL\
+\
+Create:\
+\
+```text\
+Command\
+CommandHandler\
+CommandAuthorization\
+CommandValidation\
+CommandExecution\
+CommandResult\
+CommandError\
+```\
+\
+Every command requires:\
+\
+```text\
+tenant\
+actor\
+permission\
+resource\
+idempotency_key\
+```\
+\
+---\
+\
+# 27. COMMAND IDEMPOTENCY\
+\
+Create:\
+\
+```text\
+CommandIdempotencyRecord\
+```\
+\
+Repeated command:\
+\
+```text\
+same idempotency key\
+→ same command result\
+```\
+\
+without duplicate side effects.\
+\
+---\
+\
+# 28. EVENT CONTRACTS\
+\
+Integrate Phase 29.\
+\
+Every event must have:\
+\
+```text\
+EventContract\
+EventContractVersion\
+EventField\
+EventCompatibility\
+```\
+\
+Compatibility:\
+\
+```text\
+BACKWARD_COMPATIBLE\
+FORWARD_COMPATIBLE\
+FULLY_COMPATIBLE\
+BREAKING\
+```\
+\
+---\
+\
+# 29. EVENT SCHEMA REGISTRY\
+\
+Create:\
+\
+```text\
+EventSchemaRegistry\
+EventSchemaVersion\
+EventSchemaField\
+EventSchemaCompatibility\
+EventSchemaValidation\
+```\
+\
+Support:\
+\
+- JSON Schema\
+- Pydantic schema\
+- schema fingerprints\
+\
+---\
+\
+# 30. SCHEMA EVOLUTION\
+\
+Allowed:\
+\
+- add optional field\
+- add metadata\
+- add non-breaking enum value only when consumers tolerate it\
+\
+Breaking:\
+\
+- remove field\
+- rename field\
+- change semantic meaning\
+- incompatible type change\
+\
+Breaking changes require:\
+\
+```text\
+new event version\
+migration\
+consumer compatibility\
+deprecation period\
+```\
+\
+---\
+\
+# 31. EVENT ENCRYPTION\
+\
+Encrypt sensitive payloads where necessary.\
+\
+Prefer minimizing payloads over broadcasting sensitive data.\
+\
+Do not put secrets into events.\
+\
+Never put:\
+\
+```text\
+password\
+refresh_token\
+API secret\
+private key\
+database credential\
+```\
+\
+inside event payloads.\
+\
+---\
+\
+# 32. DATA CLASSIFICATION\
+\
+Every event must inherit or declare classification.\
+\
+Examples:\
+\
+```text\
+PUBLIC_BUSINESS\
+PUBLIC_PROFESSIONAL\
+COMPANY_GENERIC\
+PRIVATE\
+SENSITIVE\
+RESTRICTED\
+```\
+\
+Routing must respect Phase 29 policy.\
+\
+---\
+\
+# 33. EVENT FILTERING\
+\
+Consumers must receive only fields they need.\
+\
+Support:\
+\
+```text\
+field projection\
+payload minimization\
+redaction\
+masking\
+```\
+\
+before cross-service or cross-region publication where required.\
+\
+---\
+\
+# 34. TENANT ISOLATION\
+\
+Every event must include tenant context.\
+\
+Reject:\
+\
+```text\
+missing tenant\
+unknown tenant\
+unauthorized tenant\
+cross-tenant routing\
+```\
+\
+Consumer authorization must be enforced.\
+\
+---\
+\
+# 35. MULTI-REGION EVENTS\
+\
+Integrate Phase 35.\
+\
+Events must contain:\
+\
+```text\
+source_region\
+origin_region\
+current_region\
+event_epoch\
+```\
+\
+Support:\
+\
+```text\
+regional stream\
+global stream\
+replication stream\
+```\
+\
+Never create duplicate canonical writes because of replicated events.\
+\
+---\
+\
+# 36. EVENT REPLICATION\
+\
+Track:\
+\
+```text\
+EventReplicationLink\
+EventReplicationCheckpoint\
+EventReplicationLag\
+EventReplicationError\
+```\
+\
+Metrics:\
+\
+```text\
+events/sec\
+lag\
+duplicates\
+failed\
+dropped\
+replayed\
+```\
+\
+---\
+\
+# 37. EVENT FAILOVER\
+\
+Flow:\
+\
+```text\
+REGION FAILURE\
+↓\
+stop affected consumers\
+↓\
+preserve checkpoint\
+↓\
+activate approved region\
+↓\
+resume\
+↓\
+deduplicate\
+↓\
+validate\
+```\
+\
+No uncontrolled replay.\
+\
+---\
+\
+# 38. EVENT BRIDGE\
+\
+For integrations:\
+\
+```text\
+External System\
+↓\
+Webhook/API\
+↓\
+Connector\
+↓\
+Inbound Event\
+↓\
+Validation\
+↓\
+Domain Command\
+```\
+\
+Never directly mutate canonical data from an untrusted webhook.\
+\
+---\
+\
+# 39. WEBHOOK EVENT SECURITY\
+\
+Validate:\
+\
+- signature\
+- timestamp\
+- replay protection\
+- source\
+- connector\
+- tenant\
+- schema\
+- permission\
+\
+Create:\
+\
+```text\
+WebhookEvent\
+WebhookSignatureValidation\
+WebhookReplayRecord\
+```\
+\
+---\
+\
+# 40. EVENT-DRIVEN RESEARCH\
+\
+Examples:\
+\
+```text\
+NEW_ODOO_SIGNAL\
+→ CREATE_RESEARCH_GAP\
+\
+COMPANY_DOMAIN_DISCOVERED\
+→ COMPANY_RESEARCH\
+\
+PERSON_ROLE_CHANGED\
+→ DECISION_MAKER_REFRESH\
+\
+CONTACT_VERIFICATION_EXPIRED\
+→ CONTACT_REVERIFY\
+\
+NEW_JOB_SIGNAL\
+→ INTENT_REASSESSMENT\
+```\
+\
+All actions must obey Phase 26 autonomy limits.\
+\
+---\
+\
+# 41. EVENT-DRIVEN ENRICHMENT\
+\
+Examples:\
+\
+```text\
+CompanyCreated\
+→ Enrichment\
+\
+DomainChanged\
+→ Domain Intelligence\
+\
+TechnologyDetected\
+→ Technology Enrichment\
+\
+PersonRoleChanged\
+→ Decision Maker Re-evaluation\
+\
+ContactChanged\
+→ Verification\
+```\
+\
+Avoid infinite event loops.\
+\
+---\
+\
+# 42. LOOP PREVENTION\
+\
+Every event should track:\
+\
+```text\
+causation_id\
+correlation_id\
+parent_event_id\
+depth\
+```\
+\
+Set a maximum propagation depth.\
+\
+Example:\
+\
+```text\
+Event A\
+→ B\
+→ C\
+→ D\
+→ STOP\
+```\
+\
+If a workflow creates its own triggering event repeatedly:\
+\
+```text\
+LOOP_DETECTED\
+```\
+\
+and stop.\
+\
+---\
+\
+# 43. EVENT CORRELATION\
+\
+Support:\
+\
+```text\
+Correlation ID\
+Trace ID\
+Causation ID\
+Workflow ID\
+Research Run ID\
+Incident ID\
+```\
+\
+This enables:\
+\
+```text\
+What caused this lead score change?\
+```\
+\
+to be traced through the event chain.\
+\
+---\
+\
+# 44. EVENT TIMELINE\
+\
+Create a unified timeline:\
+\
+```text\
+Company Created\
+↓\
+Technology Detected\
+↓\
+Odoo Signal\
+↓\
+Research Started\
+↓\
+Decision Maker Found\
+↓\
+Contact Verified\
+↓\
+Lead Score Increased\
+↓\
+Alert Created\
+```\
+\
+Every event remains linked to evidence where applicable.\
+\
+---\
+\
+# 45. REAL-TIME UI\
+\
+Use:\
+\
+```text\
+WebSocket\
+SSE\
+```\
+\
+for:\
+\
+- research progress\
+- workflow status\
+- alerts\
+- queue health\
+- monitoring changes\
+- live operations\
+\
+Do not make every page dependent on WebSockets.\
+\
+Fallback:\
+\
+```text\
+polling\
+```\
+\
+when realtime transport fails.\
+\
+---\
+\
+# 46. REAL-TIME NOTIFICATIONS\
+\
+Integrate Phase 20.\
+\
+Events may produce:\
+\
+```text\
+NotificationCreated\
+NotificationDelivered\
+NotificationFailed\
+```\
+\
+Respect:\
+\
+- user preferences\
+- quiet hours\
+- tenant policy\
+- notification deduplication\
+\
+---\
+\
+# 47. EVENT-DRIVEN ALERTS\
+\
+Flow:\
+\
+```text\
+Event\
+↓\
+Rule Evaluation\
+↓\
+Significance\
+↓\
+Deduplication\
+↓\
+Alert\
+```\
+\
+Do not generate alerts for every low-value event.\
+\
+---\
+\
+# 48. EVENT-DRIVEN MONITORING\
+\
+Monitoring consumes:\
+\
+```text\
+CompanyChanged\
+TechnologyChanged\
+PersonRoleChanged\
+IntentChanged\
+LeadScoreChanged\
+QualityChanged\
+EvidenceChanged\
+```\
+\
+and produces:\
+\
+```text\
+ChangeEvent\
+Alert\
+ResearchTrigger\
+```\
+\
+---\
+\
+# 49. ANALYTICS EVENT PIPELINE\
+\
+Events feed:\
+\
+```text\
+Operational Analytics\
+Research Analytics\
+Lead Analytics\
+Source Analytics\
+Quality Analytics\
+Intent Analytics\
+Cost Analytics\
+Performance Analytics\
+```\
+\
+Every metric must retain:\
+\
+```text\
+event source\
+timestamp\
+tenant\
+calculation version\
+```\
+\
+---\
+\
+# 50. GRAPH EVENT PIPELINE\
+\
+Events such as:\
+\
+```text\
+CompanyCreated\
+CompanyRelationshipDiscovered\
+PersonWorksAtCompany\
+TechnologyDetected\
+EvidenceCreated\
+```\
+\
+may update graph projections.\
+\
+Graph remains derived.\
+\
+---\
+\
+# 51. SEARCH EVENT PIPELINE\
+\
+Events may trigger:\
+\
+```text\
+search index update\
+document refresh\
+document delete\
+reindex\
+```\
+\
+Search failures must not corrupt canonical PostgreSQL.\
+\
+---\
+\
+# 52. CACHE INVALIDATION\
+\
+Use events for controlled cache invalidation.\
+\
+Example:\
+\
+```text\
+CompanyUpdated\
+→ invalidate company cache\
+```\
+\
+Cache failure must not block canonical writes unless explicitly required.\
+\
+---\
+\
+# 53. EVENT-DRIVEN DATA QUALITY\
+\
+Examples:\
+\
+```text\
+ContactVerificationExpired\
+→ QualityChanged\
+\
+EvidenceExpired\
+→ ResearchGapCreated\
+\
+PersonRoleChanged\
+→ DecisionMakerQualityChanged\
+\
+CompanyDomainChanged\
+→ EntityResolution\
+```\
+\
+---\
+\
+# 54. EVENT-DRIVEN GOVERNANCE\
+\
+Governance events:\
+\
+```text\
+PolicyChanged\
+ClassificationChanged\
+SuppressionCreated\
+LegalHoldCreated\
+RetentionPolicyChanged\
+PermissionChanged\
+```\
+\
+These must propagate safely to affected projections and services.\
+\
+---\
+\
+# 55. EVENT-DRIVEN LIFECYCLE\
+\
+Integrate Phase 32.\
+\
+Examples:\
+\
+```text\
+DataExpired\
+→ Archive\
+\
+ArchiveCompleted\
+→ ProjectionCleanup\
+\
+DeletionApproved\
+→ DeletionWorkflow\
+\
+DeletionCompleted\
+→ SearchCleanup\
+→ GraphCleanup\
+→ AnalyticsCleanup\
+→ RAGCleanup\
+```\
+\
+Deletion propagation must be policy-controlled and auditable.\
+\
+---\
+\
+# 56. EVENT-DRIVEN WORKFLOWS\
+\
+Integrate Phase 19.\
+\
+Workflow triggers:\
+\
+```text\
+EVENT\
+THRESHOLD\
+DATA_CHANGE\
+QUALITY_CHANGE\
+SCORE_CHANGE\
+NEW_SIGNAL\
+STALE_DATA\
+CONFLICT_CREATED\
+VERIFICATION_EXPIRED\
+```\
+\
+Workflow execution must remain idempotent.\
+\
+---\
+\
+# 57. EVENT-DRIVEN AUTONOMOUS RESEARCH\
+\
+Integrate Phase 26.\
+\
+Events may create research tasks only if:\
+\
+```text\
+policy allows\
+budget available\
+source allowed\
+research depth allowed\
+tenant authorized\
+```\
+\
+Autonomous research cannot bypass governance.\
+\
+---\
+\
+# 58. EVENT-DRIVEN AI\
+\
+AI may consume events for:\
+\
+- qualification\
+- classification\
+- summarization\
+- anomaly detection\
+- recommendations\
+\
+AI outputs must remain:\
+\
+```text\
+OBSERVED\
+CALCULATED\
+ESTIMATED\
+PREDICTED\
+RECOMMENDED\
+```\
+\
+according to Phase 21/22 semantics.\
+\
+AI must never turn an event into an unverified fact.\
+\
+---\
+\
+# 59. EVENT-DRIVEN DECISION INTELLIGENCE\
+\
+Events feed:\
+\
+```text\
+forecast updates\
+cohort changes\
+segment changes\
+intent persistence\
+lead priority\
+capacity forecasts\
+source recommendations\
+```\
+\
+Prediction outputs must retain model/version/probability/timestamp.\
+\
+---\
+\
+# 60. EVENT-DRIVEN KNOWLEDGE GRAPH\
+\
+Use events to update:\
+\
+```text\
+entities\
+relationships\
+evidence\
+conflicts\
+snapshots\
+communities\
+similarity\
+```\
+\
+Predicted graph edges remain separate from factual edges.\
+\
+---\
+\
+# 61. EVENT RETENTION\
+\
+Define retention by:\
+\
+```text\
+event_type\
+tenant\
+classification\
+legal_hold\
+regulation\
+operational_need\
+audit_requirement\
+```\
+\
+Do not retain everything forever.\
+\
+Integrate Phase 32 lifecycle policies.\
+\
+---\
+\
+# 62. EVENT ARCHIVING\
+\
+Support:\
+\
+```text\
+hot events\
+warm events\
+cold events\
+archive\
+```\
+\
+Archive must preserve:\
+\
+- event ID\
+- schema version\
+- tenant\
+- timestamp\
+- checksum\
+- provenance\
+\
+---\
+\
+# 63. EVENT INTEGRITY\
+\
+Create:\
+\
+```text\
+EventChecksum\
+EventSignature\
+EventIntegrityRecord\
+```\
+\
+Detect:\
+\
+- tampering\
+- corruption\
+- duplicate payload\
+- schema mismatch\
+\
+---\
+\
+# 64. EVENT AUDIT\
+\
+Every administrative event operation must be audited:\
+\
+```text\
+publish\
+consume\
+retry\
+replay\
+discard\
+redact\
+repair\
+reprocess\
+schema migration\
+```\
+\
+---\
+\
+# 65. EVENT OBSERVABILITY\
+\
+Metrics:\
+\
+```text\
+publish_rate\
+consume_rate\
+consumer_lag\
+processing_latency\
+retry_rate\
+DLQ_rate\
+duplicate_rate\
+replay_rate\
+schema_error_rate\
+event_loss\
+event_age\
+queue_depth\
+```\
+\
+Tracing:\
+\
+```text\
+API\
+→ DB\
+→ Outbox\
+→ Event Bus\
+→ Consumer\
+→ Projection\
+```\
+\
+---\
+\
+# 66. EVENT HEALTH DASHBOARD\
+\
+Create:\
+\
+```text\
+/events\
+/events/topics\
+/events/consumers\
+/events/dlq\
+/events/replay\
+/events/schemas\
+/events/health\
+/events/realtime\
+```\
+\
+Display:\
+\
+- throughput\
+- lag\
+- errors\
+- DLQ\
+- schema versions\
+- partitions\
+- consumers\
+- regional health\
+\
+---\
+\
+# 67. EVENT EXPLORER\
+\
+Provide:\
+\
+```text\
+Event ID\
+Tenant\
+Type\
+Version\
+Aggregate\
+Source\
+Region\
+Timestamp\
+Correlation\
+Causation\
+Payload summary\
+Consumer status\
+```\
+\
+Never expose restricted payload fields to unauthorized users.\
+\
+---\
+\
+# 68. EVENT SEARCH\
+\
+Support safe filters:\
+\
+```text\
+event_type\
+tenant\
+aggregate\
+source\
+region\
+time\
+status\
+consumer\
+correlation_id\
+```\
+\
+Do not expose raw SQL.\
+\
+---\
+\
+# 69. EVENT SIMULATOR\
+\
+Create a safe simulation environment.\
+\
+Input:\
+\
+```text\
+event_type\
+payload\
+tenant\
+schema_version\
+```\
+\
+Output:\
+\
+```text\
+matched consumers\
+expected workflow triggers\
+expected projections\
+policy decisions\
+possible side effects\
+```\
+\
+Simulation must not modify production.\
+\
+---\
+\
+# 70. EVENT CONTRACT TESTING\
+\
+For every event:\
+\
+- schema validation\
+- producer test\
+- consumer test\
+- backward compatibility\
+- forward compatibility\
+- tenant isolation\
+- authorization\
+- replay safety\
+- idempotency\
+\
+---\
+\
+# 71. LOAD TESTING\
+\
+Test:\
+\
+```text\
+10K events/sec\
+100K events/sec\
+1M events/sec\
+```\
+\
+where infrastructure permits.\
+\
+Measure:\
+\
+- throughput\
+- lag\
+- latency\
+- CPU\
+- memory\
+- storage\
+- network\
+- consumer recovery\
+\
+Do not promise a throughput number without benchmark evidence.\
+\
+---\
+\
+# 72. FAILURE TESTING\
+\
+Simulate:\
+\
+```text\
+event broker failure\
+publisher failure\
+consumer crash\
+network partition\
+duplicate event\
+out-of-order event\
+schema mismatch\
+DLQ growth\
+regional failure\
+database failure\
+event replay\
+consumer lag\
+```\
+\
+Verify recovery.\
+\
+---\
+\
+# 73. SECURITY TESTING\
+\
+Test:\
+\
+- cross-tenant event access\
+- forged events\
+- replay attacks\
+- malicious payloads\
+- schema abuse\
+- oversized events\
+- event injection\
+- unauthorized replay\
+- unauthorized DLQ access\
+- sensitive-field leakage\
+- consumer privilege escalation\
+\
+---\
+\
+# 74. EVENT SIZE LIMITS\
+\
+Configure:\
+\
+```text\
+max_event_size\
+max_payload_size\
+max_metadata_size\
+```\
+\
+Large payloads should use:\
+\
+```text\
+reference + secure object\
+```\
+\
+rather than embedding huge content.\
+\
+Access to referenced content must still be authorized.\
+\
+---\
+\
+# 75. EVENT RATE LIMITS\
+\
+Per:\
+\
+```text\
+tenant\
+producer\
+topic\
+consumer\
+region\
+```\
+\
+Support:\
+\
+```text\
+burst\
+sustained rate\
+quota\
+backpressure\
+```\
+\
+---\
+\
+# 76. BACKPRESSURE\
+\
+When consumers fall behind:\
+\
+```text\
+detect lag\
+↓\
+reduce producer pressure\
+↓\
+prioritize critical events\
+↓\
+scale consumers\
+↓\
+shed noncritical workload\
+```\
+\
+Never silently drop critical canonical events.\
+\
+---\
+\
+# 77. EVENT PRIORITY\
+\
+Support:\
+\
+```text\
+CRITICAL\
+HIGH\
+NORMAL\
+LOW\
+BULK\
+```\
+\
+Examples:\
+\
+```text\
+Security event → CRITICAL\
+Database failover → CRITICAL\
+Lead score change → NORMAL\
+Historical analytics refresh → LOW\
+```\
+\
+---\
+\
+# 78. FAIRNESS\
+\
+Prevent one tenant from monopolizing event capacity.\
+\
+Use:\
+\
+```text\
+tenant quotas\
+weighted queues\
+fair scheduling\
+per-tenant concurrency\
+```\
+\
+Integrate Phase 31 capacity controls.\
+\
+---\
+\
+# 79. EVENT COST MODEL\
+\
+Track:\
+\
+```text\
+EventCost\
+EventProducerCost\
+EventConsumerCost\
+ReplicationCost\
+StorageCost\
+ReplayCost\
+```\
+\
+Use this for cost optimization.\
+\
+---\
+\
+# 80. EVENT GOVERNANCE\
+\
+Integrate Phase 29.\
+\
+Policies must control:\
+\
+```text\
+who can publish\
+who can consume\
+which tenant\
+which event\
+which fields\
+which region\
+which retention\
+which replay\
+```\
+\
+---\
+\
+# 81. API ENDPOINTS\
+\
+Implement:\
+\
+```text\
+/api/events\
+/api/events/{id}\
+/api/events/search\
+/api/events/topics\
+/api/events/schemas\
+/api/events/schemas/{id}\
+/api/events/consumers\
+/api/events/consumers/{id}\
+/api/events/health\
+/api/events/metrics\
+\
+/api/events/replay\
+/api/events/replay/{id}\
+/api/events/replay/{id}/validate\
+/api/events/replay/{id}/approve\
+/api/events/replay/{id}/execute\
+/api/events/replay/{id}/cancel\
+\
+/api/events/dlq\
+/api/events/dlq/{id}\
+/api/events/dlq/{id}/retry\
+/api/events/dlq/{id}/discard\
+/api/events/dlq/{id}/repair\
+\
+/api/events/simulate\
+/api/events/contracts\
+/api/events/retention\
+```\
+\
+---\
+\
+# 82. DATABASE MODELS\
+\
+Implement at minimum:\
+\
+```text\
+DomainEvent\
+EventEnvelope\
+EventSchema\
+EventSchemaVersion\
+EventSchemaField\
+EventSchemaCompatibility\
+EventContract\
+EventContractVersion\
+\
+OutboxEvent\
+OutboxAttempt\
+OutboxCheckpoint\
+OutboxDeadLetter\
+OutboxLease\
+\
+EventBus\
+EventTopic\
+EventPartition\
+EventSubscription\
+EventRoute\
+EventReplicationLink\
+EventReplicationCheckpoint\
+EventReplicationLag\
+EventReplicationError\
+\
+EventConsumer\
+ConsumerGroup\
+ConsumerSubscription\
+ConsumerCheckpoint\
+ConsumerAttempt\
+ConsumerError\
+ConsumerDeadLetter\
+\
+EventProcessingRecord\
+EventIdempotencyRecord\
+Command\
+CommandHandler\
+CommandAuthorization\
+CommandValidation\
+CommandExecution\
+CommandResult\
+CommandError\
+CommandIdempotencyRecord\
+\
+EventSourcedAggregate\
+AggregateEvent\
+AggregateSnapshot\
+AggregateSnapshotVersion\
+AggregateRebuild\
+\
+DeadLetterEvent\
+DeadLetterAttempt\
+DeadLetterReason\
+DeadLetterResolution\
+\
+EventChecksum\
+EventSignature\
+EventIntegrityRecord\
+EventReplay\
+EventReplayScope\
+EventReplayValidation\
+EventReplayExecution\
+\
+EventMetric\
+EventHealthSnapshot\
+EventCost\
+EventConsumerLag\
+EventCorrelation\
+EventSimulation\
+\
+WebhookEvent\
+WebhookSignatureValidation\
+WebhookReplayRecord\
+```\
+\
+---\
+\
+# 83. BACKEND IMPLEMENTATION\
+\
+Use existing stack:\
+\
+```text\
+Python 3.12+\
+FastAPI\
+Pydantic\
+SQLAlchemy\
+Alembic\
+PostgreSQL\
+Celery\
+Redis\
+OpenTelemetry\
+Prometheus\
+```\
+\
+Recommended architecture:\
+\
+```text\
+domain/\
+events/\
+commands/\
+outbox/\
+consumers/\
+projections/\
+replay/\
+schemas/\
+contracts/\
+routing/\
+governance/\
+observability/\
+```\
+\
+Keep event infrastructure independent from individual business modules.\
+\
+---\
+\
+# 84. FRONTEND\
+\
+Use:\
+\
+```text\
+React\
+TypeScript\
+Vite\
+MUI\
+Recharts\
+```\
+\
+Pages:\
+\
+```text\
+/events\
+/events/explorer\
+/events/topics\
+/events/consumers\
+/events/dlq\
+/events/replay\
+/events/schemas\
+/events/contracts\
+/events/health\
+/events/metri

@@ -1,0 +1,445 @@
+Phase 36: Enterprise Event-Driven Architecture, Distributed Event Bus, CQRS, Event Sourcing \u0026 Real-Time Intelligence\\"}\
+\
+# LeadNexus AI X — Phase 36\
+## Enterprise Event-Driven Architecture, Distributed Event Bus, CQRS, Event Sourcing, Reliable Messaging \u0026 Real-Time Intelligence\
+\
+You are a **Principal Distributed Systems Architect, Event-Driven Architecture Specialist, CQRS/Event-Sourcing Architect, Streaming Platform Engineer, Data Platform Architect, SRE, Security Architect, and Enterprise Backend Engineer**.\
+\
+Continue the existing **LeadNexus AI X — Hyper-Scale Enterprise Lead Intelligence Platform** from **Phases 1–35**.\
+\
+Do not redesign or remove previous architecture. Extend it safely.\
+\
+---\
+\
+# 1. PRIMARY OBJECTIVE\
+\
+Build a production-grade **event-driven architecture** that connects the entire LeadNexus AI X platform through reliable, versioned, observable, tenant-isolated, idempotent events.\
+\
+The platform must support:\
+\
+```text\
+DATABASE CHANGE\
+→ DOMAIN EVENT\
+→ EVENT BUS\
+→ EVENT ROUTING\
+→ EVENT CONSUMER\
+→ PROJECTION\
+→ WORKFLOW\
+→ RESEARCH\
+→ ENRICHMENT\
+→ AI\
+→ MONITORING\
+→ ALERT\
+→ ANALYTICS\
+```\
+\
+The event architecture must support:\
+\
+- real-time intelligence\
+- asynchronous processing\
+- workflow automation\
+- research orchestration\
+- monitoring\
+- alerts\
+- analytics\
+- projections\
+- integrations\
+- auditability\
+- replay\
+- recovery\
+- multi-region operation\
+\
+---\
+\
+# 2. ABSOLUTE RULES\
+\
+1. PostgreSQL remains the canonical source of truth.\
+2. Events are not automatically the source of truth.\
+3. Event streams must be durable and replayable.\
+4. Every event must have a unique ID.\
+5. Every event must be versioned.\
+6. Every consumer must be idempotent.\
+7. Events must be tenant-scoped.\
+8. Cross-tenant events are forbidden.\
+9. Event payloads must respect data classification.\
+10. Sensitive data must not be broadcast unnecessarily.\
+11. Event schemas must be governed.\
+12. Breaking event changes require versioning.\
+13. Event ordering must never be assumed globally unless explicitly guaranteed.\
+14. At-least-once delivery is the default.\
+15. Exactly-once behavior may only be claimed where technically proven.\
+16. Duplicate delivery must be safe.\
+17. Failed messages must enter controlled retry/DLQ paths.\
+18. Replay must be bounded and audited.\
+19. Consumers must not execute arbitrary code from event payloads.\
+20. AI cannot publish privileged operational commands.\
+21. External web content remains untrusted.\
+22. Google Sheets remains optional.\
+23. CRM is not implemented.\
+24. Automatic outreach is not implemented.\
+\
+---\
+\
+# 3. EVENT-DRIVEN ARCHITECTURE\
+\
+Target:\
+\
+```text\
+                    PostgreSQL\
+                        |\
+                 Transaction Boundary\
+                        |\
+                   Outbox Event\
+                        |\
+                 Event Publisher\
+                        |\
+                  EVENT BUS\
+                        |\
+        +---------------+----------------+\
+        |               |                |\
+     Research         Workflow        Monitoring\
+        |               |                |\
+     Enrichment       Alerts          Analytics\
+        |               |                |\
+       AI              Graph          Search\
+        |               |                |\
+     Evidence        Projections     Integrations\
+```\
+\
+Use asynchronous processing wherever appropriate.\
+\
+---\
+\
+# 4. DOMAIN EVENT MODEL\
+\
+Create a common event envelope.\
+\
+Required fields:\
+\
+```text\
+event_id\
+event_type\
+event_version\
+tenant_id\
+aggregate_type\
+aggregate_id\
+occurred_at\
+published_at\
+source_service\
+source_region\
+correlation_id\
+causation_id\
+sequence\
+schema_version\
+data_classification\
+payload\
+metadata\
+```\
+\
+Optional:\
+\
+```text\
+actor_id\
+request_id\
+workflow_id\
+research_run_id\
+campaign_id\
+trace_id\
+```\
+\
+---\
+\
+# 5. EVENT TYPES\
+\
+Define controlled event categories:\
+\
+```text\
+ENTITY\
+COMPANY\
+PERSON\
+CONTACT\
+TECHNOLOGY\
+SIGNAL\
+INTENT\
+LEAD\
+EVIDENCE\
+RESEARCH\
+ENRICHMENT\
+VERIFICATION\
+WORKFLOW\
+REVIEW\
+QUALITY\
+MONITORING\
+ALERT\
+ANALYTICS\
+GRAPH\
+SEARCH\
+INTEGRATION\
+CONNECTOR\
+SHEET\
+GOVERNANCE\
+SECURITY\
+SYSTEM\
+```\
+\
+---\
+\
+# 6. CORE DOMAIN EVENTS\
+\
+Examples:\
+\
+```text\
+CompanyCreated\
+CompanyUpdated\
+CompanyMerged\
+CompanySplit\
+\
+PersonCreated\
+PersonUpdated\
+PersonRoleChanged\
+\
+ContactDiscovered\
+ContactUpdated\
+ContactVerified\
+ContactVerificationExpired\
+\
+TechnologyDetected\
+TechnologyRemoved\
+\
+EvidenceCreated\
+EvidenceUpdated\
+EvidenceExpired\
+\
+SignalCreated\
+SignalUpdated\
+\
+IntentDetected\
+IntentChanged\
+\
+LeadCreated\
+LeadScoreChanged\
+LeadStatusChanged\
+LeadSuppressed\
+LeadRestored\
+\
+ResearchStarted\
+ResearchTaskCompleted\
+ResearchGapCreated\
+ResearchGapResolved\
+ResearchCompleted\
+\
+EnrichmentStarted\
+EnrichmentCompleted\
+EnrichmentFailed\
+\
+ReviewRequested\
+ReviewCompleted\
+\
+QualityChanged\
+DataBecameStale\
+\
+AlertCreated\
+AlertResolved\
+\
+WorkflowStarted\
+WorkflowCompleted\
+WorkflowFailed\
+```\
+\
+---\
+\
+# 7. SYSTEM EVENTS\
+\
+Create system events:\
+\
+```text\
+RegionFailed\
+RegionRecovered\
+ServiceDegraded\
+ServiceRecovered\
+WorkerStarted\
+WorkerStopped\
+QueueBacklogDetected\
+DatabaseFailoverStarted\
+DatabaseFailoverCompleted\
+ReplicationLagDetected\
+ReplicationRecovered\
+DeploymentStarted\
+DeploymentCompleted\
+DeploymentRolledBack\
+ConfigurationChanged\
+FeatureFlagChanged\
+```\
+\
+---\
+\
+# 8. OUTBOX PATTERN\
+\
+Implement the transactional outbox.\
+\
+Flow:\
+\
+```text\
+BEGIN TRANSACTION\
+    Update Entity\
+    Insert Domain Event into Outbox\
+COMMIT\
+        ↓\
+Outbox Publisher\
+        ↓\
+Event Bus\
+```\
+\
+This prevents:\
+\
+```text\
+DATABASE UPDATED\
++\
+EVENT LOST\
+```\
+\
+---\
+\
+# 9. OUTBOX MODEL\
+\
+Create:\
+\
+```text\
+OutboxEvent\
+OutboxAttempt\
+OutboxCheckpoint\
+OutboxDeadLetter\
+OutboxLease\
+```\
+\
+Fields:\
+\
+```text\
+id\
+tenant_id\
+aggregate_type\
+aggregate_id\
+event_type\
+event_version\
+payload\
+status\
+attempt_count\
+available_at\
+published_at\
+created_at\
+locked_until\
+last_error\
+```\
+\
+Statuses:\
+\
+```text\
+PENDING\
+PUBLISHING\
+PUBLISHED\
+RETRYING\
+FAILED\
+DEAD_LETTER\
+CANCELLED\
+```\
+\
+---\
+\
+# 10. EVENT BUS ABSTRACTION\
+\
+Do not tightly couple business logic to one broker.\
+\
+Create:\
+\
+```text\
+EventBus\
+EventPublisher\
+EventConsumer\
+EventSubscription\
+EventRouter\
+EventSerializer\
+EventDeserializer\
+```\
+\
+Provider abstraction must allow:\
+\
+```text\
+Kafka\
+Redpanda\
+NATS\
+RabbitMQ\
+Cloud Event Bus\
+```\
+\
+without rewriting domain logic.\
+\
+---\
+\
+# 11. TOPIC / STREAM DESIGN\
+\
+Create controlled topic namespaces:\
+\
+```text\
+leadnexus.company\
+leadnexus.person\
+leadnexus.contact\
+leadnexus.evidence\
+leadnexus.signal\
+leadnexus.intent\
+leadnexus.lead\
+leadnexus.research\
+leadnexus.enrichment\
+leadnexus.workflow\
+leadnexus.monitoring\
+leadnexus.alert\
+leadnexus.analytics\
+leadnexus.graph\
+leadnexus.search\
+leadnexus.integration\
+leadnexus.system\
+```\
+\
+Tenant isolation must be enforced at routing/authorization level.\
+\
+---\
+\
+# 12. PARTITIONING\
+\
+Partition events using stable keys.\
+\
+Preferred:\
+\
+```text\
+tenant_id\
+```\
+\
+or:\
+\
+```text\
+tenant_id + aggregate_id\
+```\
+\
+depending on ordering requirements.\
+\
+Never partition randomly when ordering is required.\
+\
+---\
+\
+# 13. ORDERING\
+\
+Guarantee ordering only within explicitly defined boundaries.\
+\
+Examples:\
+\
+```text\
+Company events\
+ordered by company aggregate\
+\
+Lead events\
+ordered by lead aggregate\
+\
+Workflow events\
+ordered by workflow execution\
+```\
+\
+Do not claim global orderi

@@ -71,6 +71,7 @@ from app.api.routes.telemetry_routes import router as telemetry_router
 from app.api.routes.self_healing_routes import router as self_healing_router
 from app.api.routes.entity_graph_routes import router as entity_graph_router
 from app.api.routes.signal_stream_routes import router as stream_router
+from app.api.routes.privacy_routes import router as privacy_router
 
 # Root router for top-level probes
 root_router = APIRouter()
@@ -143,6 +144,7 @@ api_v1_router.include_router(telemetry_router)
 api_v1_router.include_router(self_healing_router)
 api_v1_router.include_router(entity_graph_router)
 api_v1_router.include_router(stream_router)
+api_v1_router.include_router(privacy_router)
 
 # Direct /api router for universal compatibility
 api_direct_router = APIRouter(prefix="/api")
@@ -207,3 +209,4 @@ api_direct_router.include_router(telemetry_router)
 api_direct_router.include_router(self_healing_router)
 api_direct_router.include_router(entity_graph_router)
 api_direct_router.include_router(stream_router)
+api_direct_router.include_router(privacy_router)

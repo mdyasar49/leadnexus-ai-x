@@ -567,6 +567,14 @@ from app.models.signal_stream import (
     SignalAnomalyAlert,
     SignalType,
 )
+from app.models.privacy_compliance import (
+    ConsentOptOutRecord,
+    DSARRequestRecord,
+    PrivacyAuditRecord,
+    OptOutType,
+    DSARType,
+    DSARStatus,
+)
 
 __all__ = [
     "SystemMetadata",
@@ -1098,4 +1106,10 @@ __all__ = [
     "StreamSubscriptionRecord",
     "SignalAnomalyAlert",
     "SignalType",
+    "ConsentOptOutRecord",
+    "DSARRequestRecord",
+    "PrivacyAuditRecord",
+    "OptOutType",
+    "DSARType",
+    "DSARStatus",
 ]
